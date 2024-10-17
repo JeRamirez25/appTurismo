@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/titleFragment">
+    app:startDestination="@id/tuFragment">
 
     <fragment
         android:id="@+id/titleFragment"
@@ -55,4 +55,26 @@
         android:name="com.example.android.navigation.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/tuFragment"
+        android:name="com.example.android.navigation.TuFragment"
+        android:label="TuFragment" >
+        <action
+            android:id="@+id/action_tuFragment_to_tutoFragment"
+            app:destination="@id/tutoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tutoFragment"
+        android:name="com.example.android.navigation.TutoFragment"
+        android:label="fragment_tuto"
+        tools:layout="@layout/fragment_tuto" >
+        <action
+            android:id="@+id/action_tutoFragment_to_tutoriFragment"
+            app:destination="@id/tutoriFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tutoriFragment"
+        android:name="com.example.android.navigation.TutoriFragment"
+        android:label="fragment_tutori"
+        tools:layout="@layout/fragment_tutori" />
 </navigation>
