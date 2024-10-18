@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
-    android:padding="20dp"
+    tools:context=".Registro"
+    android:padding="40dp"
     android:background="@color/white">
 
     <ImageButton
@@ -20,26 +20,28 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+
     <ImageView
-        android:id="@+id/Icon"
+        android:id="@+id/Logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/icon"
+        app:srcCompat="@drawable/logo_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_img" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/IMG01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/img01_girl_reading"
-        app:layout_constraintTop_toBottomOf="@+id/Icon"
-        app:srcCompat="@drawable/registro_img"
+        app:layout_constraintBottom_toTopOf="@id/Nombre"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Logo"
+        app:srcCompat="@drawable/registro_img" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/Nombre"
@@ -50,10 +52,10 @@
         android:hint="@string/nombre"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/emailInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/IMG01" />
+        app:layout_constraintTop_toBottomOf="@id/IMG01"
+        app:layout_constraintBottom_toTopOf="@id/emailInput"/>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/emailInput"
@@ -78,10 +80,10 @@
         android:hint="@string/contrasena"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/repeatPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailInput" />
+        app:layout_constraintTop_toBottomOf="@id/emailInput"
+        app:layout_constraintBottom_toTopOf="@id/repeatPassword"/>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/repeatPassword"
@@ -107,8 +109,9 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/repeatPassword" />
+        app:layout_constraintTop_toBottomOf="@id/repeatPassword"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
