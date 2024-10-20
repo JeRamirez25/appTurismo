@@ -20,7 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-
     <ImageView
         android:id="@+id/Logo"
         android:layout_width="wrap_content"
@@ -37,11 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/img01_girl_reading"
+        app:srcCompat="@drawable/inicio_img"
         app:layout_constraintBottom_toTopOf="@id/Nombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Logo"
-        app:srcCompat="@drawable/registro_img" />
+        />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/Nombre"
@@ -113,5 +113,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/repeatPassword"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/RegisterBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
