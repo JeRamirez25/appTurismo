@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Buscar"
+        android:id="@+id/buscar"
+        android:icon="@drawable/buscar_icon"/>
+    <item android:title="Rutas"
+        android:id="@+id/rutas"
+        android:icon="@drawable/rutas_icon"/>
+    <item android:title="Perfil"
+        android:id="@+id/perfil"
+        android:icon="@drawable/usuario_icon"/>
+</menu>
