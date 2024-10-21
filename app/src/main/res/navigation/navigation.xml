@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/tuFragment">
+
+    <activity
+        android:id="@+id/login"
+        android:name="com.example.app_bases_datos.Login"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.app_bases_datos.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <activity
+        android:id="@+id/registro"
+        android:name="com.example.app_bases_datos.Registro"
+        android:label="activity_registro"
+        tools:layout="@layout/activity_registro" />
+    <fragment
+        android:id="@+id/tuFragment"
+        android:name="com.example.app_bases_datos.TuFragment"
+        android:label="fragment_tu"
+        tools:layout="@layout/fragment_tu" >
+        <action
+            android:id="@+id/action_tuFragment_to_tutoFragment"
+            app:destination="@id/tutoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tutoFragment"
+        android:name="com.example.app_bases_datos.TutoFragment"
+        android:label="fragment_tuto"
+        tools:layout="@layout/fragment_tuto" >
+        <action
+            android:id="@+id/action_tutoFragment_to_tutoriFragment"
+            app:destination="@id/tutoriFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tutoriFragment"
+        android:name="com.example.app_bases_datos.TutoriFragment"
+        android:label="fragment_tutori"
+        tools:layout="@layout/fragment_tutori" >
+        <action
+            android:id="@+id/action_tutoriFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+</navigation>
