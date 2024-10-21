@@ -22,4 +22,7 @@
     <string name="confirmar_contrase_a">Confirmar Contraseña</string>
     <string name="nombre">Nombre</string>
     <string name="back_icon">Back Icon</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="TuFrag_TextView_text">Explora por la ciudad</string>
 </resources>
