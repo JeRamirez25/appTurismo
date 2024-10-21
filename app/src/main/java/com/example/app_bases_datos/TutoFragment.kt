@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.navigation.fragment.findNavController
 
 
@@ -19,7 +20,7 @@ class TutoFragment : Fragment() {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_tuto, container, false)
 
-        val buttonNav = root.findViewById<Button>(R.id.button)
+        val buttonNav = root.findViewById<ImageButton>(R.id.imageButton)
 
         buttonNav.setOnClickListener {
             findNavController().navigate(R.id.action_tutoFragment_to_tutoriFragment)

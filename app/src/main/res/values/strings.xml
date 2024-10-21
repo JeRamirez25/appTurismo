@@ -25,4 +25,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="TuFrag_TextView_text">Explora por la ciudad</string>
+    <string name="text_fragmenttuto">Planea tu recorrido como quieras</string>
+    <string name="string_tutoritext">Guarda y comparte tus viajes</string>
+    <string name="string_tutoributtonText">Comenzar</string>
 </resources>
