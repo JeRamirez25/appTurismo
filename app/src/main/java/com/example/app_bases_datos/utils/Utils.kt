@@ -5,10 +5,10 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
-
+import com.google.firebase.firestore.GeoPoint
 
 // En esta función se crean los usuarios
-fun crearUsuario(correo: String ,nombre: String) {
+fun crearUsuario(correo: String, nombre: String) {
     val db = Firebase.firestore
     val usuario = hashMapOf(
         "id" to correo,
@@ -117,7 +117,10 @@ fun getDetallesLugares(idUsuario: String) {
 
                             .addOnFailureListener { e ->
                                 Log.e(
-                                    "Firestore", "Error al obtener detalles del lugar con ID $lugar", e)
+                                    "Firestore",
+                                    "Error al obtener detalles del lugar con ID $lugar",
+                                    e
+                                )
                             }
                     }
                 }
@@ -145,12 +148,45 @@ fun getDetallesRuta(idUsuario: String) {
                             }
                             .addOnFailureListener { e ->
                                 Log.e(
-                                    "Firestore", "Error al obtener detalles de la ruta con ID $rutaId", e)
+                                    "Firestore",
+                                    "Error al obtener detalles de la ruta con ID $rutaId",
+                                    e
+                                )
                             }
                     }
                 }
             }
 
+        }
+}
+
+fun crearLugar(
+    nombre: String,
+    categoria: String,
+    descripcion: String,
+    direccion: String,
+    imagenURL: String,
+    precio: Int,
+    tiempo: Int
+) {
+    val db = FirebaseFirestore.getInstance()
+    val lugar = hashMapOf(
+        "categoria" to categoria,
+        "descripcion" to descripcion,
+        "direccion" to direccion,
+        "geopoint" to null,
+        "imagenURL" to imagenURL,
+        "nombre" to nombre,
+        "precio" to precio,
+        "tiempo" to tiempo
+    )
+
+    db.collection("lugares").add(lugar)
+        .addOnSuccessListener { documentReference ->
+            Log.d("Firestore", "Lugar creado correctamente con ID: ${documentReference.id}")
+        }
+        .addOnFailureListener { e ->
+            Log.w("Firestore", "Error al crear lugar", e)
         }
 }
 
