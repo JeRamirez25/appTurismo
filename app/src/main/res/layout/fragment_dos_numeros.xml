@@ -11,9 +11,12 @@
         android:id="@+id/inputCadena"
         android:layout_width="379dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:hint="Ingresa dos palabras"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="422dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/boton"
@@ -44,15 +47,13 @@
         android:id="@+id/textView"
         android:layout_width="357dp"
         android:layout_height="165dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="236dp"
         android:text="Te voy a ayudar a solucionar el problema de las 2 palabras.\n\n
 1. Ingresa una cadena de caracteres que contenga solo 2 palabras separadas por un espacio.\n\n
 2. Imprimiré una nueva cadena con las posiciones de la primera y segunda palabra intercambiadas (la segunda palabra se imprime primero)."
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/inputCadena"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.705" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
