@@ -25,7 +25,7 @@ class Dos_mitades : Fragment() {
 
         boton = view.findViewById(R.id.btn)
         inputCadena = view.findViewById(R.id.editText)
-        resultado = view.findViewById(R.id.textView7)
+        resultado = view.findViewById(R.id.textView8)
 
         boton.setOnClickListener {
             val cadena = inputCadena.text.toString()
