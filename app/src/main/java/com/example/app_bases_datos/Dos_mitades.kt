@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class Buscar : Fragment() {
+class Dos_mitades : Fragment() {
 
 
     override fun onCreateView(

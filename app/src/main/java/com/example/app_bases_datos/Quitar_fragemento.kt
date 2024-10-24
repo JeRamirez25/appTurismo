@@ -13,7 +13,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-class Perfil : Fragment() {
+class Quitar_fragemento : Fragment() {
 
     private val auth: FirebaseAuth = Firebase.auth
 
@@ -32,7 +32,7 @@ class Perfil : Fragment() {
 
         logoutBtn.setOnClickListener {
             auth.signOut()
-            val intent = Intent(activity, Login::class.java)
+            val intent = Intent(activity, Start::class.java)
             startActivity(intent)
 
         }

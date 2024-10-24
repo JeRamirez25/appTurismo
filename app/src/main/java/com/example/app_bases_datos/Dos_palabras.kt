@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 
 
-class Rutas : Fragment() {
+class Dos_palabras : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
