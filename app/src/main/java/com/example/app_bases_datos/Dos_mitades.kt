@@ -14,7 +14,7 @@ class Dos_mitades : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_buscar, container, false)
+        return inflater.inflate(R.layout.fragment_dos_mitades, container, false)
     }
 
 }

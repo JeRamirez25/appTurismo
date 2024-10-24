@@ -14,7 +14,7 @@ class Dos_palabras : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rutas, container, false)
+        return inflater.inflate(R.layout.fragment_dos_numeros, container, false)
     }
 
 }
