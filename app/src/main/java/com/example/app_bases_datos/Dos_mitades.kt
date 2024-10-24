@@ -1,6 +1,5 @@
 package com.example.app_bases_datos
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
