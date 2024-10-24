@@ -1,6 +1,8 @@
 package com.example.app_bases_datos
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,7 +12,7 @@ import com.example.app_bases_datos.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
+    private lateinit var emailTextView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,6 +23,11 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        emailTextView = binding.emailTextView
+        val email = intent.getStringExtra("EMAIL")
+        Log.d("MainActivity", "Correo recibido: $email")
+        emailTextView.text = if (email != null) "Hola, $email" else "No se proporcionó correo"
+
 
         replaceFragment(Dos_mitades())
         binding.bottomNavigationView.setOnItemSelectedListener {
