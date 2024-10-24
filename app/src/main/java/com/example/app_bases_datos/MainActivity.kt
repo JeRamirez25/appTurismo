@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.dos_mitades -> replaceFragment(Dos_mitades())
                 R.id.dos_palabras -> replaceFragment(Dos_palabras())
-                R.id.quitar_fragmento -> replaceFragment(Quitar_fragemento())
+                R.id.quitar_fragmento -> replaceFragment(Quitar_fragmento())
             }
             true
         }
