@@ -77,22 +77,32 @@ class Registro : AppCompatActivity() {
             }
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 progressBar.visibility = ProgressBar.GONE
-                Toast.makeText(this, "Por favor, ingresa un correo válido.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Por favor, ingresa un correo válido.", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
             if (password.length < 6) {
                 progressBar.visibility = ProgressBar.GONE
-                Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "La contraseña debe tener al menos 6 caracteres.",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
             if (nombre.length < 2) {
                 progressBar.visibility = ProgressBar.GONE
-                Toast.makeText(this, "El nombre debe tener al menos 2 caracteres.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "El nombre debe tener al menos 2 caracteres.",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
             if (!nombre.all { it.isLetter() || it.isWhitespace() }) {
                 progressBar.visibility = ProgressBar.GONE
-                Toast.makeText(this, "El nombre solo debe contener letras.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "El nombre solo debe contener letras.", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
             if (nombre.isBlank()) {
@@ -122,9 +132,17 @@ class Registro : AppCompatActivity() {
                     } else {
                         val exception = task.exception
                         if (exception is FirebaseAuthUserCollisionException) {
-                            Toast.makeText(this, "El correo ya está registrado.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "El correo ya está registrado.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
-                            Toast.makeText(this, "ERROR: autentificación fallida", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "ERROR: autentificación fallida",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                         Toast.makeText(this, "ERROR: autentificación fallida", Toast.LENGTH_SHORT)
                             .show()

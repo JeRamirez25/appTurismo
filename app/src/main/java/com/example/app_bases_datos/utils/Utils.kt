@@ -51,7 +51,10 @@ fun updateLugaresFavoritos(idUsuario: String, idLugar: String) {
     val usuarioRef = db.collection("usuarios").document(idUsuario)
     usuarioRef.update("lugaresFavoritos", FieldValue.arrayUnion(idLugar))
         .addOnSuccessListener {
-            Log.d("Firestore", "Actualizando lugar favorito para usuario: $idUsuario, lugar: $idLugar")
+            Log.d(
+                "Firestore",
+                "Actualizando lugar favorito para usuario: $idUsuario, lugar: $idLugar"
+            )
         }
         .addOnFailureListener { e ->
             Log.w("Firestore", "Error al actualizar lugares favoritos", e)

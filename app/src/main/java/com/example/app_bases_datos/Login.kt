@@ -45,7 +45,8 @@ class Login : AppCompatActivity() {
         loginBtn.setOnClickListener {
             val progressBar = findViewById<ProgressBar>(R.id.progress)
             val email = findViewById<TextInputEditText>(R.id.emailInput).text.toString().trim()
-            val password = findViewById<TextInputEditText>(R.id.passwordInput).text.toString().trim()
+            val password =
+                findViewById<TextInputEditText>(R.id.passwordInput).text.toString().trim()
 
             progressBar.visibility = ProgressBar.VISIBLE
 
@@ -56,17 +57,23 @@ class Login : AppCompatActivity() {
                 return@setOnClickListener
             }
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Toast.makeText(this, "Por favor, ingresa un correo válido.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Por favor, ingresa un correo válido.", Toast.LENGTH_SHORT)
+                    .show()
                 progressBar.visibility = ProgressBar.GONE
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(password)) {
-                Toast.makeText(this, "Por favor, ingresa una contraseña.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Por favor, ingresa una contraseña.", Toast.LENGTH_SHORT)
+                    .show()
                 progressBar.visibility = ProgressBar.GONE
                 return@setOnClickListener
             }
             if (password.length < 6) {
-                Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "La contraseña debe tener al menos 6 caracteres.",
+                    Toast.LENGTH_SHORT
+                ).show()
                 progressBar.visibility = ProgressBar.GONE
                 return@setOnClickListener
             }

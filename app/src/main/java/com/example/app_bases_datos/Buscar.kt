@@ -31,18 +31,25 @@ class Buscar : Fragment() {
         agregarFavoritoBtn.setOnClickListener {
             val user = auth.currentUser
             if (user != null) {
+
                 // Obtener el ID del usuario por correo
                 obtenerIdUsuario(user.email ?: "") { usuarioId ->
                     if (usuarioId != null) {
                         // Llamar a la función para actualizar los lugares favoritos
                         updateLugaresFavoritos(usuarioId, lugarId)
-                        Toast.makeText(context, "Lugar añadido a favoritos.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Lugar añadido a favoritos.", Toast.LENGTH_SHORT)
+                            .show()
                     } else {
-                        Toast.makeText(context, "No se encontró el usuario.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "No se encontró el usuario.", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             } else {
-                Toast.makeText(context, "Debes iniciar sesión para añadir a favoritos.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Debes iniciar sesión para añadir a favoritos.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
         return view
