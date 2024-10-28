@@ -1,15 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Buscar">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Buscar" />
+        android:id="@+id/lugarDescripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripción del lugar"
+        android:textSize="18sp"
+        android:paddingBottom="8dp" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/agregarFavoritoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Añadir a Favoritos" />
+
+</LinearLayout>

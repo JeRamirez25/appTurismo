@@ -11,10 +11,9 @@ import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-
+import com.example.app_bases_datos.utils.nombreUsuario
 
 class Perfil : Fragment() {
-
     private val auth: FirebaseAuth = Firebase.auth
 
     override fun onCreateView(
@@ -25,18 +24,21 @@ class Perfil : Fragment() {
         val root = inflater.inflate(R.layout.fragment_perfil, container, false)
 
         val logoutBtn = root.findViewById<Button>(R.id.logout)
-        val user = auth.currentUser
         val info = root.findViewById<TextView>(R.id.texto)
 
-        info.text = user!!.email
+        val user = auth.currentUser
+        if (user != null) {
+            val userEmail = user.email ?: ""
+            nombreUsuario(userEmail, info)
+        } else {
+            info.text = "Usuario no autenticado"
+        }
 
         logoutBtn.setOnClickListener {
             auth.signOut()
             val intent = Intent(activity, Login::class.java)
             startActivity(intent)
-
         }
-
         return root
     }
 
