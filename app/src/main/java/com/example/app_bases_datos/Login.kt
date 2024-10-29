@@ -3,6 +3,7 @@ package com.example.app_bases_datos
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Patterns
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -31,6 +32,13 @@ class Login : AppCompatActivity() {
             insets
         }
 
+        if (auth.currentUser != null) {
+            Intent(this, MainActivity::class.java).also {
+                startActivity(it)
+                finish()
+            }
+        }
+
         loginBtn = findViewById(R.id.loginBtn)
         registerBtn = findViewById(R.id.registrarBtn)
 
@@ -42,16 +50,35 @@ class Login : AppCompatActivity() {
 
             progressBar.visibility = ProgressBar.VISIBLE
 
+            // Verificaciones
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(this, "Por favor, ingresa un correo.", Toast.LENGTH_SHORT).show()
+                progressBar.visibility = ProgressBar.GONE
+                return@setOnClickListener
+            }
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(this, "Por favor, ingresa un correo válido.", Toast.LENGTH_SHORT)
+                    .show()
+                progressBar.visibility = ProgressBar.GONE
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(password)) {
                 Toast.makeText(this, "Por favor, ingresa una contraseña.", Toast.LENGTH_SHORT)
                     .show()
+                progressBar.visibility = ProgressBar.GONE
+                return@setOnClickListener
+            }
+            if (password.length < 6) {
+                Toast.makeText(
+                    this,
+                    "La contraseña debe tener al menos 6 caracteres.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                progressBar.visibility = ProgressBar.GONE
                 return@setOnClickListener
             }
 
+            // Autentificación
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     progressBar.visibility = ProgressBar.GONE
@@ -77,6 +104,8 @@ class Login : AppCompatActivity() {
                     }
                 }
         }
+
+        // Redirigir al registro
         registerBtn.setOnClickListener {
             try {
                 Intent(this, Registro::class.java).also {

@@ -1,6 +1,7 @@
 package com.example.app_bases_datos.utils
 
 import android.util.Log
+import android.widget.TextView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -48,10 +49,12 @@ fun crearRuta(nombreRuta: String) {
 fun updateLugaresFavoritos(idUsuario: String, idLugar: String) {
     val db = FirebaseFirestore.getInstance()
     val usuarioRef = db.collection("usuarios").document(idUsuario)
-
     usuarioRef.update("lugaresFavoritos", FieldValue.arrayUnion(idLugar))
         .addOnSuccessListener {
-            Log.d("Firestore", "Lugar guardado correctamente en los favoritos usuario")
+            Log.d(
+                "Firestore",
+                "Actualizando lugar favorito para usuario: $idUsuario, lugar: $idLugar"
+            )
         }
         .addOnFailureListener { e ->
             Log.w("Firestore", "Error al actualizar lugares favoritos", e)
@@ -76,13 +79,32 @@ fun updateRutasFavoritas(idUsuario: String, idRuta: String) {
 fun updateLugaresDeRuta(idRuta: String, idLugar: String) {
     val db = Firebase.firestore
     val rutaRef = db.collection("rutas").document(idRuta)
-
     rutaRef.update("lugares", FieldValue.arrayUnion(idLugar))
         .addOnSuccessListener {
             Log.d("Firestore", "Lugar añadido a la ruta ${idRuta}")
         }
         .addOnFailureListener { e ->
             Log.w("Firestore", "Error al añadir lugar a la ruta", e)
+        }
+}
+
+fun obtenerIdUsuario(correo: String, onComplete: (String?) -> Unit) {
+    val db = FirebaseFirestore.getInstance()
+
+    db.collection("usuarios")
+        .whereEqualTo("id", correo)
+        .get()
+        .addOnSuccessListener { documents ->
+            if (!documents.isEmpty) {
+                val usuarioId = documents.documents[0].id
+                onComplete(usuarioId) // Devuelve el ID del usuario
+            } else {
+                onComplete(null) // No se encontró el usuario
+            }
+        }
+        .addOnFailureListener { e ->
+            Log.w("Firestore", "Error al buscar el usuario por correo", e)
+            onComplete(null)
         }
 }
 
@@ -157,6 +179,26 @@ fun getDetallesRuta(idUsuario: String) {
                 }
             }
 
+        }
+}
+
+fun nombreUsuario(email: String, infoTextView: TextView) {
+    val db = FirebaseFirestore.getInstance()
+
+    db.collection("usuarios")
+        .whereEqualTo("id", email)
+        .get()
+        .addOnSuccessListener { documents ->
+            if (!documents.isEmpty) {
+                val nombre = documents.documents[0].getString("nombre")
+                infoTextView.text = nombre // Muestra el nombre en el TextView
+            } else {
+                infoTextView.text = "Nombre no encontrado"
+            }
+        }
+        .addOnFailureListener { e ->
+            Log.w("Firestore", "Error al obtener el nombre del usuario", e)
+            infoTextView.text = "Error al cargar el nombre"
         }
 }
 

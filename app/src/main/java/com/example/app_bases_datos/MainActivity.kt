@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             replaceFragment(Buscar())
             binding.bottomNavigationView.setOnItemSelectedListener {
-                when(it.itemId){
+                when (it.itemId) {
                     R.id.buscar -> replaceFragment(Buscar())
                     R.id.rutas -> replaceFragment(Rutas())
                     R.id.perfil -> replaceFragment(Perfil())
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun replaceFragment(fragment : Fragment){
+    private fun replaceFragment(fragment: Fragment) {
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
