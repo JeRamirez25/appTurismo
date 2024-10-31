@@ -39,7 +39,7 @@
                     android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/cerrar_icon" />
+                    app:srcCompat="@drawable/group_8" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -82,7 +82,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/like_icon" />
+                    app:srcCompat="@drawable/group_8" />
 
                 <ImageView
                     android:id="@+id/ivGuardar"
@@ -93,7 +93,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/ivLike"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.516"
-                    app:srcCompat="@drawable/add_route_icon" />
+                    app:srcCompat="@drawable/group_8" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -118,7 +118,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/ubicacion_icon" />
+                    app:srcCompat="@drawable/group_8" />
 
                 <TextView
                     android:id="@+id/tvDireccionLugar"
@@ -144,7 +144,7 @@
                     app:layout_constraintHorizontal_bias="0.65"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/back_icon" />
+                    app:srcCompat="@drawable/group_8" />
 
                 <TextView
                     android:id="@+id/tvTiempoLugar"

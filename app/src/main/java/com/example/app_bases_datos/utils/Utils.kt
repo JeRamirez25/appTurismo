@@ -202,6 +202,26 @@ fun nombreUsuario(email: String, infoTextView: TextView) {
         }
 }
 
+fun saludo(email: String, infoTextView: TextView) {
+    val db = FirebaseFirestore.getInstance()
+
+    db.collection("usuarios")
+        .whereEqualTo("id", email)
+        .get()
+        .addOnSuccessListener { documents ->
+            if (!documents.isEmpty) {
+                val nombre = documents.documents[0].getString("nombre")
+                infoTextView.text = "Hola, "+nombre // Muestra el nombre en el TextView
+            } else {
+                infoTextView.text = "Desconocido"
+            }
+        }
+        .addOnFailureListener { e ->
+            Log.w("Firestore", "Error al obtener el nombre del usuario", e)
+            infoTextView.text = "Error al cargar el nombre"
+        }
+}
+
 fun crearLugar(
     nombre: String,
     categoria: String,

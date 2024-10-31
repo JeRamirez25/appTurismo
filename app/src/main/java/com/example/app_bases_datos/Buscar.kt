@@ -17,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.app_bases_datos.utils.saludo
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.ktx.firestore
 
@@ -24,6 +25,7 @@ class Buscar : Fragment() {
 
     private val lugares = mutableListOf<Lugar>()
     private lateinit var adapter: LugarAdapter
+    private val auth: FirebaseAuth = Firebase.auth
 
     //private val auth: FirebaseAuth = Firebase.auth
     //private val lugarId = "4X2Mhk25Rh01ScrM0SLI"
@@ -44,6 +46,14 @@ class Buscar : Fragment() {
             val tvWelcome = view.findViewById<TextView>(R.id.tvBienvenido)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
             //val nestedScrollView = view.findViewById<NestedScrollView>(R.id.nestedScrollView)
+
+            val user = auth.currentUser
+            if (user != null) {
+                val userEmail = user.email ?: ""
+                saludo(userEmail, tvWelcome)
+            } else {
+                tvWelcome.text = "Hola, desconocido"
+            }
 
             adapter = LugarAdapter(lugares){ lugar ->
                 abrirDetalleLugar(lugar)
