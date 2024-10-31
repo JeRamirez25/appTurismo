@@ -1,21 +1,51 @@
+<!-- res/layout/activity_inicio.xml -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
+    <!-- Texto de bienvenida -->
     <TextView
-        android:id="@+id/lugarDescripcion"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvBienvenido"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Descripción del lugar"
-        android:textSize="18sp"
-        android:paddingBottom="8dp" />
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="start"
+        android:text="Hola, usuario"
+        android:textAlignment="textStart"
+        android:textColor="@android:color/black"
+        android:textSize="22sp" />
 
-    <Button
-        android:id="@+id/agregarFavoritoBtn"
-        android:layout_width="wrap_content"
+    <!-- Barra de búsqueda -->
+    <TextView
+        android:id="@+id/tvInicio2"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="Añadir a Favoritos" />
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="start"
+        android:text="¿A dónde quieres ir hoy?"
+        android:textAlignment="textStart"
+        android:textColor="@color/primary_color"
+        android:textSize="32sp" />
 
+    <!-- Barra de búsqueda -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="369dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="#F6F6F6"
+        android:queryHint="Buscar destinos..." />
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

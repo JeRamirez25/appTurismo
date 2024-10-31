@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.App_bases_datos" parent="Base.Theme.App_bases_datos" />
+    <style name="CircleLugar">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">3dp</item>
+    </style>
 </resources>

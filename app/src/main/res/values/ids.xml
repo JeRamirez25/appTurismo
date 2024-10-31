@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tvBienvenido" type="id" />
+    <item name="searchView" type="id" />
+    <item name="recyclerView" type="id" />
+    <item name="ivLugar" type="id" />
+    <item name="tvNombreLugar" type="id" />
+    <item name="tvDireccionLugar" type="id" />
+    <item name="tvPrecioLugar" type="id" />
+</resources>

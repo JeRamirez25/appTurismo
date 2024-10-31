@@ -1,0 +1,41 @@
+<!-- res/layout/item_lugar.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/fondo_redondeado"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_margin="20dp">
+
+    <ImageView
+        android:id="@+id/ivLugar"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/tvNombreLugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingTop="8dp"
+        android:textColor="@color/black"
+        android:text="Nombre"/>
+
+    <TextView
+        android:id="@+id/tvDireccionLugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:text="direccion"/>
+
+    <TextView
+        android:id="@+id/tvTiempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:text="tiempo"/>
+
+
+</LinearLayout>

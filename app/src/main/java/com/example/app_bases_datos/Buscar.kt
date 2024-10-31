@@ -1,6 +1,7 @@
 package com.example.app_bases_datos
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,45 +14,86 @@ import com.example.app_bases_datos.utils.updateLugaresFavoritos
 import com.example.app_bases_datos.utils.obtenerIdUsuario
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.ktx.firestore
 
 class Buscar : Fragment() {
-    private val auth: FirebaseAuth = Firebase.auth
-    private val lugarId = "4X2Mhk25Rh01ScrM0SLI"
+
+    private val lugares = mutableListOf<Lugar>()
+    private lateinit var adapter: LugarAdapter
+
+    //private val auth: FirebaseAuth = Firebase.auth
+    //private val lugarId = "4X2Mhk25Rh01ScrM0SLI"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_buscar, container, false)
+        return inflater.inflate(R.layout.fragment_buscar, container, false)
 
-        val lugarDescripcion = view.findViewById<TextView>(R.id.lugarDescripcion)
-        val agregarFavoritoBtn = view.findViewById<Button>(R.id.agregarFavoritoBtn)
+    }
 
-        lugarDescripcion.text = "Este es un lugar de prueba con ID: $lugarId"
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        agregarFavoritoBtn.setOnClickListener {
-            val user = auth.currentUser
-            if (user != null) {
+        try {
+            // Referencias de las vistas
+            val tvWelcome = view.findViewById<TextView>(R.id.tvBienvenido)
+            val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+            //val nestedScrollView = view.findViewById<NestedScrollView>(R.id.nestedScrollView)
 
-                // Obtener el ID del usuario por correo
-                obtenerIdUsuario(user.email ?: "") { usuarioId ->
-                    if (usuarioId != null) {
-                        // Llamar a la función para actualizar los lugares favoritos
-                        updateLugaresFavoritos(usuarioId, lugarId)
-                        Toast.makeText(context, "Lugar añadido a favoritos.", Toast.LENGTH_SHORT)
-                            .show()
-                    } else {
-                        Toast.makeText(context, "No se encontró el usuario.", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-            } else {
-                Toast.makeText(
-                    context,
-                    "Debes iniciar sesión para añadir a favoritos.",
-                    Toast.LENGTH_SHORT
-                ).show()
+            adapter = LugarAdapter(lugares){ lugar ->
+                abrirDetalleLugar(lugar)
             }
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.adapter = adapter
+
+            cargarLugares()
+
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    tvWelcome.visibility = if (dy > 0) View.GONE else View.VISIBLE
+                }
+            })
+        } catch (e: Exception) {
+            Log.e("BuscarFragment", "Error en onViewCreated: ${e.message}")
         }
-        return view
+    }
+
+    private fun cargarLugares() {
+        val db = Firebase.firestore
+        db.collection("lugares")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val lugar = document.toObject(Lugar::class.java)
+                    lugares.add(lugar)
+                }
+                adapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { exception ->
+                Log.e("InicioFragment", "Error al cargar lugares: ${exception.message}")
+            }
+    }
+
+    private fun abrirDetalleLugar(lugar: Lugar) {
+        val fragment = LugarDetalle()
+        fragment.arguments = Bundle().apply {
+            putString("nombre", lugar.nombre)
+            putString("descripcion", lugar.descripcion)
+            putString("direccion", lugar.direccion)
+            putString("precio", lugar.precio.toString())
+            putString("imagenURL", lugar.imagenURL)
+            putString("tiempo", lugar.tiempo.toString())
+        }
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
