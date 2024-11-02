@@ -9,7 +9,7 @@ import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import kotlin.math.*
-import java.util.*
+import java.util.Random
 
 class RutasParametros : Fragment() {
 
@@ -138,10 +138,9 @@ class RutasParametros : Fragment() {
                         Dirección: ${direcciones[index]}
                         Tiempo: ${tiempos[index]} minutos
                         Precio: ${precios[index]} COP
-                        -
                     """.trimIndent())
                 }
-                println(rutaEstablecida)
+                println("El nombre de la ruta es \"$texto\", tiene como paradas $rutaEstablecida")
             }
         }
         return view

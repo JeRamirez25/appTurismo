@@ -14,7 +14,7 @@
         android:layout_marginStart="67dp"
         android:layout_marginTop="70dp"
         android:autofillHints="Nombre de la ruta"
-        android:hint="Ingrese el nombre de su ruta"
+        android:hint="Ingrese el nombre de la ruta"
         android:inputType="textShortMessage"
         android:textColor="#111111"
         app:layout_constraintStart_toStartOf="parent"
