@@ -47,4 +47,18 @@
             android:id="@+id/action_tutoriFragment_to_mainActivity"
             app:destination="@id/mainActivity" />
     </fragment>
+    <fragment
+        android:id="@+id/rutas2"
+        android:name="com.example.app_bases_datos.Rutas"
+        android:label="fragment_rutas"
+        tools:layout="@layout/fragment_rutas" >
+        <action
+            android:id="@+id/action_rutas2_to_rutasParametros"
+            app:destination="@id/rutasParametros" />
+    </fragment>
+    <fragment
+        android:id="@+id/rutasParametros"
+        android:name="com.example.app_bases_datos.RutasParametros"
+        android:label="fragment_rutas_parametros"
+        tools:layout="@layout/fragment_rutas_parametros" />
 </navigation>

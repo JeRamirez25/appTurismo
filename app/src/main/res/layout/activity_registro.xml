@@ -78,12 +78,13 @@
         android:height="45dp"
         android:background="@color/gray"
         android:hint="@string/contrasena"
+        android:password="true"
         android:textColor="@color/black"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/repeatPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailInput"
-        app:layout_constraintBottom_toTopOf="@id/repeatPassword"/>
+        app:layout_constraintTop_toBottomOf="@id/emailInput" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/repeatPassword"
@@ -92,12 +93,13 @@
         android:height="45dp"
         android:background="@color/gray"
         android:hint="@string/confirmar_contrase_a"
+        android:password="true"
         android:textColor="@color/black"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/RegisterBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/passwordInput"
-        app:layout_constraintBottom_toTopOf="@id/RegisterBtn"/>
+        app:layout_constraintTop_toBottomOf="@id/passwordInput" />
 
     <Button
         android:id="@+id/RegisterBtn"
