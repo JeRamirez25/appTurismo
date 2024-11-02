@@ -1,25 +1,23 @@
 package com.example.app_bases_datos
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
-import com.example.app_bases_datos.utils.updateLugaresFavoritos
-import com.example.app_bases_datos.utils.obtenerIdUsuario
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_bases_datos.utils.saludo
-import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.ktx.firestore
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 
 class Buscar : Fragment() {
 
@@ -90,20 +88,24 @@ class Buscar : Fragment() {
             }
     }
 
+    @SuppressLint("CommitTransaction")
     private fun abrirDetalleLugar(lugar: Lugar) {
-        val fragment = LugarDetalle()
-        fragment.arguments = Bundle().apply {
-            putString("nombre", lugar.nombre)
-            putString("descripcion", lugar.descripcion)
-            putString("direccion", lugar.direccion)
-            putString("precio", lugar.precio.toString())
-            putString("imagenURL", lugar.imagenURL)
-            putString("tiempo", lugar.tiempo.toString())
+        val fragment = LugarDetalle().apply {
+            arguments = Bundle().apply {
+                putString("nombre", "Ejemplo de Lugar")
+                putString("precio", "$100")
+                putString("descripcion", "Un lugar muy interesante para visitar.")
+                putString("direccion", "Dirección Ejemplo 123")
+                putString("tiempo", "2 horas")
+                putString("imagenURL", "https://example.com/imagen.jpg")
+            }
         }
 
-        parentFragmentManager.beginTransaction()
+        // Agregar el fragmento al contenedor
+        childFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
             .addToBackStack(null)
             .commit()
+
     }
 }
