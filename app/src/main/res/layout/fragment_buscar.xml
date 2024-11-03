@@ -1,12 +1,9 @@
-<!-- res/layout/activity_inicio.xml -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Texto de bienvenida -->
     <TextView
         android:id="@+id/tvBienvenido"
         android:layout_width="match_parent"
@@ -15,12 +12,11 @@
         android:layout_marginTop="25dp"
         android:fontFamily="@font/inter_bold"
         android:gravity="start"
-        android:text="Hola, usuario"
+        android:text=""
         android:textAlignment="textStart"
         android:textColor="@android:color/black"
         android:textSize="22sp" />
 
-    <!-- Barra de búsqueda -->
     <TextView
         android:id="@+id/tvInicio2"
         android:layout_width="250dp"
@@ -34,7 +30,6 @@
         android:textColor="@color/primary_color"
         android:textSize="32sp" />
 
-    <!-- Barra de búsqueda -->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="369dp"
@@ -43,9 +38,9 @@
         android:background="#F6F6F6"
         android:queryHint="Buscar destinos..." />
 
-    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </LinearLayout>

@@ -1,13 +1,13 @@
 package com.example.app_bases_datos
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -16,17 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_bases_datos.utils.saludo
 import com.google.firebase.firestore.ktx.firestore
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.commit
 
 class Buscar : Fragment() {
 
     private val lugares = mutableListOf<Lugar>()
     private lateinit var adapter: LugarAdapter
     private val auth: FirebaseAuth = Firebase.auth
-
-    //private val auth: FirebaseAuth = Firebase.auth
-    //private val lugarId = "4X2Mhk25Rh01ScrM0SLI"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,10 +35,9 @@ class Buscar : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         try {
-            // Referencias de las vistas
             val tvWelcome = view.findViewById<TextView>(R.id.tvBienvenido)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-            //val nestedScrollView = view.findViewById<NestedScrollView>(R.id.nestedScrollView)
+            recyclerView.layoutManager = LinearLayoutManager(context)
 
             val user = auth.currentUser
             if (user != null) {
@@ -53,11 +47,30 @@ class Buscar : Fragment() {
                 tvWelcome.text = "Hola, desconocido"
             }
 
-            adapter = LugarAdapter(lugares){ lugar ->
-                abrirDetalleLugar(lugar)
-            }
-            recyclerView.layoutManager = LinearLayoutManager(context)
+            adapter = LugarAdapter(lugares)
             recyclerView.adapter = adapter
+            adapter.setOnItemClickListener(object : LugarAdapter.onItemClickListener {
+                override fun onItemClick(position: Int) {
+                    //Toast.makeText(requireContext(), "Click al item numero. "+ lugares[position], Toast.LENGTH_LONG).show()
+                    //val intent = Intent(requireContext(),LugarDetalle::class.java)
+
+                    val lugarSeleccionado = lugares[position]
+                    val intent = Intent(requireContext(), Detalles_de_lugares::class.java).apply {
+                        putExtra("nombre", lugarSeleccionado.nombre)
+                        putExtra("direccion", lugarSeleccionado.direccion)
+                        putExtra("descripcion", lugarSeleccionado.descripcion)
+                        putExtra("precio", lugarSeleccionado.precio)
+                        putExtra("tiempo", lugarSeleccionado.tiempo)
+                        putExtra("imagenURL", lugarSeleccionado.imagenURL) // Asegúrate de que esta propiedad exista en tu clase Lugar
+                    }
+
+                    // Inicia la actividad
+                    startActivity(intent)
+
+
+                }
+
+            })
 
             cargarLugares()
 
@@ -72,6 +85,7 @@ class Buscar : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun cargarLugares() {
         val db = Firebase.firestore
         db.collection("lugares")
@@ -86,26 +100,5 @@ class Buscar : Fragment() {
             .addOnFailureListener { exception ->
                 Log.e("InicioFragment", "Error al cargar lugares: ${exception.message}")
             }
-    }
-
-    @SuppressLint("CommitTransaction")
-    private fun abrirDetalleLugar(lugar: Lugar) {
-        val fragment = LugarDetalle().apply {
-            arguments = Bundle().apply {
-                putString("nombre", "Ejemplo de Lugar")
-                putString("precio", "$100")
-                putString("descripcion", "Un lugar muy interesante para visitar.")
-                putString("direccion", "Dirección Ejemplo 123")
-                putString("tiempo", "2 horas")
-                putString("imagenURL", "https://example.com/imagen.jpg")
-            }
-        }
-
-        // Agregar el fragmento al contenedor
-        childFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment)
-            .addToBackStack(null)
-            .commit()
-
     }
 }
