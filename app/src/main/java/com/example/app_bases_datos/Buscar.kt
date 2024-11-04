@@ -28,7 +28,6 @@ class Buscar : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_buscar, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,7 +52,6 @@ class Buscar : Fragment() {
                 override fun onItemClick(position: Int) {
                     //Toast.makeText(requireContext(), "Click al item numero. "+ lugares[position], Toast.LENGTH_LONG).show()
                     //val intent = Intent(requireContext(),LugarDetalle::class.java)
-
                     val lugarSeleccionado = lugares[position]
                     val intent = Intent(requireContext(), Detalles_de_lugares::class.java).apply {
                         putExtra("nombre", lugarSeleccionado.nombre)
@@ -63,10 +61,8 @@ class Buscar : Fragment() {
                         putExtra("tiempo", lugarSeleccionado.tiempo)
                         putExtra("imagenURL", lugarSeleccionado.imagenURL) // Asegúrate de que esta propiedad exista en tu clase Lugar
                     }
-
                     // Inicia la actividad
                     startActivity(intent)
-
 
                 }
 

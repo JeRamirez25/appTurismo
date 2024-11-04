@@ -1,11 +1,13 @@
 package com.example.app_bases_datos
 
-data class Lugar(
+import android.os.Parcel
+import android.os.Parcelable
+
+data class FavoritoLugar(
     val nombre: String = "",
     val direccion: String = "",
     val tiempo: Int = 0,
     val imagenURL: String = "",
     val precio: Int = 0,
-    val descripcion: String = "",
-    var categoria: String = "",
+    val categoria: String = "",
 )
