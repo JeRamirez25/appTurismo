@@ -1,59 +1,102 @@
 package com.example.app_bases_datos
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RutasHome.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RutasHome : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    val db = Firebase.firestore
+    var rutasFavoritas = mutableListOf<String>()
+    val rutaFavorito = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rutas_home, container, false)
-    }
+        val view = inflater.inflate(R.layout.fragment_rutas_home, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RutasHome.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RutasHome().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        // Obtener el usuario autenticado
+        val auth = FirebaseAuth.getInstance()
+        val userActual = auth.currentUser
+        val userEmail = userActual?.email
+
+        Log.d("Debug", "Correo del usuario autenticado: $userEmail")
+
+        // Verificar que el usuario esté autenticado y el correo no sea nulo
+        if (userEmail != null) {
+            // Referencia al usuario en la colección "usuarios" por el campo "id"
+            db.collection("usuarios")
+                .whereEqualTo("id", userEmail) // Cambiar "id" si el campo es diferente en Firestore
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
+                        val documento = querySnapshot.documents[0]
+                        Log.d("Debug", "Documento de usuario encontrado: ${documento.id}")
+
+                        // Obtener rutas favoritas
+                        rutasFavoritas = documento.get("rutasFavoritas") as? MutableList<String> ?: mutableListOf()
+                        Log.d("Debug", "Rutas favoritas del usuario: $rutasFavoritas")
+
+                        // Obtener detalles de cada ruta favorita
+                        for (id in rutasFavoritas) {
+                            db.collection("rutas")
+                                .document(id)
+                                .get()
+                                .addOnSuccessListener { rutaDocument ->
+                                    //val rutaGuardada = rutaDocument.toObject(RutaModelo::class.java)
+                                    val nombreRuta = documento.getString("nombre")
+                                    val lugaresID = documento.get("lugares") as? MutableList<String>
+                                    println(lugaresID)
+                                    if (nombreRuta != null) {
+                                        rutaFavorito.add(nombreRuta)
+                                    }
+                                    rutaFavorito.add(lugaresID.toString())
+                                    println(rutaFavorito)
+                                    //Log.d("Debug", "Detalles de la ruta guardada con ID $id: $rutaData")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e("Error", "Error al obtener los detalles de la ruta con ID $id", e)
+                                }
+                        }
+                    } else {
+                        Log.d("Debug", "No se encontró ningún usuario con el correo: $userEmail")
+                    }
                 }
-            }
+                .addOnFailureListener { e ->
+                    Log.e("Error", "Error al obtener el usuario por correo", e)
+                }
+        } else {
+            Log.d("Error", "El usuario no está autenticado o el correo es nulo")
+        }
+
+
+
+        // Botón para cambiar de fragmento
+        view?.findViewById<Button>(R.id.btn_ruta)?.setOnClickListener {
+            val fragment = RutasParametros()
+            val fragmentManager = parentFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout, fragment)
+            fragmentTransaction.commit()
+        }
+
+        return view
+    }
+    fun mostrarRutasFavoritas(rutasFavoritas: List<Map<String, Any>>) {
+        for (ruta in rutasFavoritas) {
+            val nombre = ruta["nombre"]
+            val lugaresIds = ruta["lugaresIds"] as? List<String>
+
+            Log.d("RutaFavorita", "Nombre: $nombre, Lugares: $lugaresIds")
+            // Aquí puedes hacer algo con cada ruta, como agregarla a un RecyclerView
+        }
     }
 }
