@@ -1,59 +1,79 @@
 package com.example.app_bases_datos
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.app_bases_datos.utils.saludo
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RutasEscogidas.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RutasEscogidas : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val lugares = mutableListOf<Lugar>()
+    private val auth: FirebaseAuth = Firebase.auth
+    private val lugaresRutasGeneradas = mutableListOf<Lugar>()
+    private lateinit var adaptadorEscogidosRuta: AdaptadorEscogidos
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_rutas_escogidas, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RutasEscogidas.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RutasEscogidas().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val textView: TextView = view.findViewById(R.id.textView)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewEscogidos)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        // Inicializa el adaptador y asígnalo al RecyclerView
+        adaptadorEscogidosRuta = AdaptadorEscogidos(lugaresRutasGeneradas)
+        recyclerView.adapter = adaptadorEscogidosRuta
+
+        val args = this.arguments
+        val texto = args?.getStringArrayList("rutaEstablecida")
+        val text = args?.getString("nombreRuta")
+
+        textView.text = text ?: "Nombre de ruta no encontrado"
+
+        if (texto != null) {
+            cargarLugaresEscogidos(texto)
+        } else {
+            Log.d("RutasEscogidasFragment", "No hay datos en la lista de rutaEstablecida")
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun cargarLugaresEscogidos(lista: ArrayList<String>) {
+        val db = Firebase.firestore
+        for (id in lista) {
+            db.collection("lugares")
+                .document(id)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val lugarRutaGenerada = document.toObject(Lugar::class.java)
+                        if (lugarRutaGenerada != null) {
+                            lugaresRutasGeneradas.add(lugarRutaGenerada)
+                            adaptadorEscogidosRuta.notifyDataSetChanged() // Notifica cambios al adaptador
+                        }
+                    }
                 }
-            }
+                .addOnFailureListener { exception ->
+                    Log.e("RutasEscogidasFragment", "Error al cargar lugar: ${exception.message}")
+                }
+        }
     }
 }

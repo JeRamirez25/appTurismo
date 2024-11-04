@@ -1,13 +1,21 @@
 package com.example.app_bases_datos
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.app_bases_datos.utils.saludo
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import java.util.ArrayList
 import kotlin.math.*
 import java.util.Random
 
@@ -128,19 +136,21 @@ class RutasParametros : Fragment() {
 
                     rutaEstablecida.add(listaId[index])
                     tiempoRecorrido += tiempos[index]
-
-                    println("""
-                        -
-                        Id: ${listaId[index]}
-                        Nombre: ${nombres[index]}
-                        Descripción: ${descripciones[index]}
-                        Imagen: ${imagenes[index]}
-                        Dirección: ${direcciones[index]}
-                        Tiempo: ${tiempos[index]} minutos
-                        Precio: ${precios[index]} COP
-                    """.trimIndent())
                 }
                 println("El nombre de la ruta es \"$texto\", tiene como paradas $rutaEstablecida")
+
+                val bundle = Bundle()
+                bundle.putStringArrayList("rutaEstablecida", ArrayList(rutaEstablecida))
+                bundle.putString("nombreRuta", texto)
+                val fragment = RutasEscogidas()
+                fragment.arguments = bundle
+
+                val fragmentManager = getFragmentManager()
+                val fragmentTransaction = fragmentManager?.beginTransaction()
+                if (fragmentTransaction != null) {
+                    fragmentTransaction.replace(R.id.frame_layout, fragment)
+                    fragmentTransaction.commit()
+                }
             }
         }
         return view
