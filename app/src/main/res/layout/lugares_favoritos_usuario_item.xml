@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/fondo_redondeado"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_margin="20dp"
+    android:id="@+id/contenedor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/fotoLugarFavorito"
+            android:layout_width="145dp"
+            android:layout_height="143dp"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nombreLugaresFavoritos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:text="Nombre"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:id="@+id/direccionLugarFavorito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:text="direccion"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:id="@+id/tiempoLugarFavorito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:text="tiempo"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:id="@+id/precioLugarFavorito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Precio"
+                android:layout_margin="5dp"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+    <!--TextView
+        android:id="@+id/descripcionLugarFavorito"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:text="Descripcion"!-->
+
+</LinearLayout>

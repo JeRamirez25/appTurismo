@@ -10,4 +10,11 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">3dp</item>
     </style>
+
+    <style name="BorderImg">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+
+
 </resources>
