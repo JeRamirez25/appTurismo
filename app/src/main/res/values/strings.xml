@@ -28,4 +28,7 @@
     <string name="text_fragmenttuto">Planea tu recorrido como quieras</string>
     <string name="string_tutoritext">Guarda y comparte tus viajes</string>
     <string name="string_tutoributtonText">Comenzar</string>
+    <string name="nombre_de_la_ruta">Nombre de la ruta</string>
+    <string name="boton_guardar">boton_guardar</string>
+    <string name="cerrar_btn">cerrar_btn</string>
 </resources>

@@ -20,6 +20,7 @@ class GuardarEnCategoria : AppCompatActivity() {
     val listaRutas = mutableListOf<RutaModelo>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var btnGuardarLugar: Button
+    private lateinit var btnCrearRuta: Button
     private val rutasSeleccionadas = mutableMapOf<String, Boolean>()
     private lateinit var adaptadorRutas: RutaAdapter
 
@@ -34,6 +35,12 @@ class GuardarEnCategoria : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerViewRutasFavoritasGuardar)
         btnGuardarLugar = findViewById(R.id.btnGuardarDevolverse)
+        btnCrearRuta = findViewById(R.id.btnCrearRutaNueva)
+
+        btnCrearRuta.setOnClickListener {
+            val intent = Intent(this, CrearRutaNueva::class.java)
+            startActivity(intent)
+        }
 
         adaptadorRutas = RutaAdapter(listaRutas, lugarId, usuarioId) { ruta, isChecked ->
             rutasSeleccionadas[ruta.id] = isChecked

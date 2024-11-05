@@ -8,7 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class AdaptadorRutas(private val lugaresRutas: MutableList<RutaModelo>) :
+class AdaptadorRutas(private val lugaresRutas: MutableList<RutaModelo>,
+                     private val onRutaClick: (RutaModelo) -> Unit) :
 RecyclerView.Adapter<AdaptadorRutas.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -17,12 +18,15 @@ RecyclerView.Adapter<AdaptadorRutas.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(lugaresRutas[position])
+        //holder.bind(lugaresRutas[position])
+        val ruta = lugaresRutas[position]
+        holder.bind(ruta)
+        holder.itemView.setOnClickListener { onRutaClick(ruta) }
+
     }
 
-    override fun getItemCount(): Int {
-        return lugaresRutas.size
-    }
+    override fun getItemCount(): Int = lugaresRutas.size
+
 
     class MyViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView){
         val nombreR : TextView = itemView.findViewById(R.id.nombreRuta)

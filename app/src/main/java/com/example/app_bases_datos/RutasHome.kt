@@ -68,9 +68,23 @@ class RutasHome : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewHome)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        adaptadorRutasEscogidas = AdaptadorRutas(listaRutas)
-        recyclerView.adapter = adaptadorRutasEscogidas
+        //adaptadorRutasEscogidas = AdaptadorRutas(listaRutas)
+        //recyclerView.adapter = adaptadorRutasEscogidas
 
-        adaptadorRutasEscogidas.notifyDataSetChanged()
+        //adaptadorRutasEscogidas.notifyDataSetChanged()
+
+        adaptadorRutasEscogidas = AdaptadorRutas(listaRutas) { ruta ->
+            val fragment = RutasEscogidas()
+            val bundle = Bundle()
+            bundle.putStringArrayList("rutaEstablecida", ArrayList(ruta.lugares))
+            bundle.putString("nombreRuta", ruta.nombre)
+            fragment.arguments = bundle
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+        recyclerView.adapter = adaptadorRutasEscogidas
     }
 }

@@ -19,6 +19,9 @@
             android:name=".DetallesLugarRuta"
             android:exported="false" />
         <activity
+            android:name=".CrearRutaNueva"
+            android:exported="false" />
+        <activity
             android:name=".DetallesLugaresFavoritos"
             android:exported="false" />
         <activity
