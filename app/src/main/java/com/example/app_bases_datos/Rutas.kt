@@ -1,13 +1,15 @@
 package com.example.app_bases_datos
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.navigation.fragment.findNavController
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.example.app_bases_datos.utils.verificarRuta
+import kotlinx.coroutines.launch
 
 class Rutas : Fragment() {
 
@@ -15,33 +17,28 @@ class Rutas : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val root = inflater.inflate(R.layout.fragment_rutas,container, false)
+        val ID_USUARIO = "qDKCX43GUHbA0pyB8yRl"
+        var root: View? = null
 
-        val buttonNav = root.findViewById<Button>(R.id.StartBtn)
-        val buttonPrueba = root.findViewById<Button>(R.id.btnPrueba)
-
-        buttonPrueba.setOnClickListener{
-            val fragmentManager = getFragmentManager()
-            val fragmentTransaction = fragmentManager?.beginTransaction()
-            if (fragmentTransaction != null) {
-                fragmentTransaction.replace(R.id.frame_layout, RutasHome())
-                fragmentTransaction.commit()
+        lifecycleScope.launch {
+            val tieneRutas = verificarRuta(ID_USUARIO)
+            Log.d("Firestore", "¿El usuario tiene rutas? $tieneRutas")
+            if (tieneRutas) {
+                val fragmentManager = getFragmentManager()
+                val fragmentTransaction = fragmentManager?.beginTransaction()
+                if (fragmentTransaction != null) {
+                    fragmentTransaction.replace(R.id.frame_layout, RutasHome())
+                    fragmentTransaction.commit()
+                }
+            } else {
+                val fragmentManager = getFragmentManager()
+                val fragmentTransaction = fragmentManager?.beginTransaction()
+                if (fragmentTransaction != null) {
+                    fragmentTransaction.replace(R.id.frame_layout, NoRutas())
+                    fragmentTransaction.commit()
+                }
             }
-        }
-
-        buttonNav.setOnClickListener {
-            //findNavController().navigate(R.id.action_rutas2_to_rutasParametros)
-
-            val fragmentManager = getFragmentManager()
-            val fragmentTransaction = fragmentManager?.beginTransaction()
-            if (fragmentTransaction != null) {
-                fragmentTransaction.replace(R.id.frame_layout, RutasParametros())
-                fragmentTransaction.commit()
-            }
-
         }
         return root
     }
-
 }

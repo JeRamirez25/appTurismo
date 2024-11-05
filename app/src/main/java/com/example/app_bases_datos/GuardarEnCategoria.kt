@@ -77,10 +77,6 @@ class GuardarEnCategoria : AppCompatActivity() {
                         }
                     }
                 }
-
-
         }
-
-
     }
 }
