@@ -1,6 +1,7 @@
 package com.example.app_bases_datos
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,8 +35,12 @@ class RutasHome : Fragment() {
                 .addOnSuccessListener { querySnapshot ->
                     if (!querySnapshot.isEmpty) {
                         val documento = querySnapshot.documents[0]
-                        listaRutaFavoritasId.addAll(documento.get("rutasFavoritas") as List<String>)
+                        listaRutaFavoritasId.clear()
+                        listaRutas.clear()
+                        Log.d("Cantidad de rutas favoritas","$listaRutaFavoritasId")
+                        Log.d("Cantidad de rutas","$listaRutas")
 
+                        listaRutaFavoritasId.addAll(documento.get("rutasFavoritas") as List<String>)
                         listaRutaFavoritasId.forEach { rutaId ->
                             db.collection("rutas").document(rutaId).get()
                                 .addOnSuccessListener { rutaDocument ->
