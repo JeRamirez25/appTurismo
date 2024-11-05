@@ -15,47 +15,47 @@
         <ImageView
             android:id="@+id/fotoLugarFavorito"
             android:layout_width="145dp"
-            android:layout_height="143dp"
+            android:layout_height="match_parent"
             android:scaleType="centerCrop" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/nombreLugaresFavoritos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:paddingTop="8dp"
                 android:text="Nombre"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_margin="5dp"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/direccionLugarFavorito"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:paddingTop="4dp"
-                android:text="direccion"
-                android:layout_margin="5dp"/>
+                android:text="direccion" />
 
             <TextView
                 android:id="@+id/tiempoLugarFavorito"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:paddingTop="4dp"
-                android:text="tiempo"
-                android:layout_margin="5dp"/>
+                android:text="tiempo" />
 
             <TextView
                 android:id="@+id/precioLugarFavorito"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Precio"
-                android:layout_margin="5dp"/>
+                android:layout_margin="5dp"
+                android:text="Precio" />
 
 
         </LinearLayout>

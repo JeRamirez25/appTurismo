@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="150dp"
         android:gravity="center"
         android:text="MIS RUTAS"
@@ -28,7 +28,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/inter_medium"
         android:text="Crea alguna ruta para comenzar"
         android:textAlignment="center"
@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <Button
         android:id="@+id/StartBtn"
@@ -46,10 +46,12 @@
         android:layout_marginStart="152dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="152dp"
-        android:backgroundTint="#106ba4"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/ripple"
+        android:backgroundTint="#106ba4"
         android:text="¡Iniciemos!"
         android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -59,15 +61,12 @@
         android:layout_width="345dp"
         android:layout_height="345dp"
         android:layout_marginStart="33dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="33dp"
-        android:layout_marginBottom="13dp"
         android:src="@drawable/inicio_rutas"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <Button
         android:id="@+id/btnPrueba"
