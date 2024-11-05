@@ -83,13 +83,5 @@ class RutasHome : Fragment() {
 
         return view
     }
-    fun mostrarRutasFavoritas(rutasFavoritas: List<Map<String, Any>>) {
-        for (ruta in rutasFavoritas) {
-            val nombre = ruta["nombre"]
-            val lugaresIds = ruta["lugaresIds"] as? List<String>
 
-            Log.d("RutaFavorita", "Nombre: $nombre, Lugares: $lugaresIds")
-            // Aquí puedes hacer algo con cada ruta, como agregarla a un RecyclerView
-        }
-    }
 }

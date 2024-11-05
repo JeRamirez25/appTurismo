@@ -2,6 +2,7 @@ package com.example.app_bases_datos
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,9 @@ class Detalles_de_lugares : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detalles_de_lugares)
+
+            val lugarId = intent.getStringExtra("id")
+            Log.d("ID_Lugar_Detalle", "ID recibido en Detalles_de_lugares: $lugarId")
 
             val nombre = intent.getStringExtra("nombre")
             val direccion = intent.getStringExtra("direccion")

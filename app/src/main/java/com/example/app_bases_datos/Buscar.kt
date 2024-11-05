@@ -54,6 +54,7 @@ class Buscar : Fragment() {
                     //val intent = Intent(requireContext(),LugarDetalle::class.java)
                     val lugarSeleccionado = lugares[position]
                     val intent = Intent(requireContext(), Detalles_de_lugares::class.java).apply {
+                        putExtra("id", lugarSeleccionado.id)
                         putExtra("nombre", lugarSeleccionado.nombre)
                         putExtra("direccion", lugarSeleccionado.direccion)
                         putExtra("descripcion", lugarSeleccionado.descripcion)
@@ -89,6 +90,8 @@ class Buscar : Fragment() {
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     val lugar = document.toObject(Lugar::class.java)
+                    lugar.id = document.id
+
                     lugares.add(lugar)
                 }
                 adapter.notifyDataSetChanged()

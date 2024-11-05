@@ -8,4 +8,6 @@ data class Lugar(
     val precio: Int = 0,
     val descripcion: String = "",
     var categoria: String = "",
-)
+) {
+    var id: String = ""
+}
