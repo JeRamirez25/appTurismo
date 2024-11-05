@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.app_bases_datos.utils.añadirLugarRuta
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
@@ -58,12 +59,18 @@ class GuardarEnCategoria : AppCompatActivity() {
                                         val ruta = rutaDocument.toObject(RutaModelo::class.java)
                                         if (ruta != null) {
                                             ruta.id = rutaDocument.id
+                                            Log.d("PRUEBA","${ruta.id}")
                                             listaRutas.add(ruta)
                                             Log.d("Hola", "$listaRutas")
                                             Log.d("HolaPrueba", "$ruta.id")
                                             adaptadorRutas.notifyDataSetChanged()
                                             Log.d("GuardarEnCategoria", "Ruta añadida: ${ruta.nombre}")
                                             Log.d("GuardarEnCategoria", "Lista de rutas actual: $listaRutas") // Verifica la lista completa
+                                            btnGuardarLugar.setOnClickListener {
+                                                añadirLugarRuta(ruta.id,lugarId)
+                                                val intent = Intent(this, Detalles_de_lugares::class.java)
+                                                startActivity(intent)
+                                            }
                                         }
                                     }
                                 }
@@ -71,11 +78,7 @@ class GuardarEnCategoria : AppCompatActivity() {
                     }
                 }
 
-            // aqui agregar logica para guardar el lugar en una ruta y devolverse a los detalles de este, si no funciona quitar el intent jeje
-            btnGuardarLugar.setOnClickListener {
-                val intent = Intent(this, Detalles_de_lugares::class.java)
-                startActivity(intent)
-            }
+
         }
 
 
