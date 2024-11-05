@@ -16,6 +16,7 @@ class RutasHome : Fragment() {
     val db = Firebase.firestore
     var rutasFavoritas = mutableListOf<String>()
     val rutaFavorito = mutableListOf<String>()
+    val listaRutaFavoritasId = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,53 +31,45 @@ class RutasHome : Fragment() {
 
         Log.d("Debug", "Correo del usuario autenticado: $userEmail")
 
-        // Verificar que el usuario esté autenticado y el correo no sea nulo
         if (userEmail != null) {
             // Referencia al usuario en la colección "usuarios" por el campo "id"
-            db.collection("usuarios")
-                .whereEqualTo("id", userEmail) // Cambiar "id" si el campo es diferente en Firestore
+            db.collection("usuarios").whereEqualTo("id",userEmail)
                 .get()
                 .addOnSuccessListener { querySnapshot ->
                     if (!querySnapshot.isEmpty) {
                         val documento = querySnapshot.documents[0]
-                        Log.d("Debug", "Documento de usuario encontrado: ${documento.id}")
+                        // Accede a la lista de IDs de rutas favoritas
+                        listaRutaFavoritasId.addAll(documento.get("rutasFavoritas") as List<String>)
 
-                        // Obtener rutas favoritas
-                        rutasFavoritas = documento.get("rutasFavoritas") as? MutableList<String> ?: mutableListOf()
-                        Log.d("Debug", "Rutas favoritas del usuario: $rutasFavoritas")
-
-                        // Obtener detalles de cada ruta favorita
-                        for (id in rutasFavoritas) {
-                            db.collection("rutas")
-                                .document(id)
-                                .get()
+                        // Paso 2: Iterar sobre la lista de IDs y obtener detalles de cada ruta
+                        listaRutaFavoritasId.forEach { rutaId ->
+                            db.collection("rutas").document(rutaId).get()
                                 .addOnSuccessListener { rutaDocument ->
-                                    //val rutaGuardada = rutaDocument.toObject(RutaModelo::class.java)
-                                    val nombreRuta = documento.getString("nombre")
-                                    val lugaresID = documento.get("lugares") as? MutableList<String>
-                                    println(lugaresID)
-                                    if (nombreRuta != null) {
-                                        rutaFavorito.add(nombreRuta)
+                                    if (rutaDocument.exists()) {
+                                        // Obtener el nombre de la ruta y los IDs de los lugares
+                                        val nombreRuta = rutaDocument.getString("nombre")
+                                        val lugaresId = rutaDocument.get("lugares") as? List<String>
+                                            ?: emptyList<String>()
+
+                                        // Aquí puedes guardar o mostrar el nombre de la ruta y los lugares
+                                        println("Ruta: $nombreRuta")
+                                        println("Lugares en la ruta: $lugaresId")
+                                    } else {
+                                        println("Ruta con ID $rutaId no encontrada.")
                                     }
-                                    rutaFavorito.add(lugaresID.toString())
-                                    println(rutaFavorito)
-                                    //Log.d("Debug", "Detalles de la ruta guardada con ID $id: $rutaData")
                                 }
                                 .addOnFailureListener { e ->
-                                    Log.e("Error", "Error al obtener los detalles de la ruta con ID $id", e)
+                                    println("Error al obtener la ruta con ID $rutaId: ${e.message}")
                                 }
                         }
                     } else {
-                        Log.d("Debug", "No se encontró ningún usuario con el correo: $userEmail")
+                        println("Usuario con ID $userEmail no encontrado.")
                     }
                 }
                 .addOnFailureListener { e ->
-                    Log.e("Error", "Error al obtener el usuario por correo", e)
+                    println("Error al obtener el usuario: ${e.message}")
                 }
-        } else {
-            Log.d("Error", "El usuario no está autenticado o el correo es nulo")
         }
-
 
 
         // Botón para cambiar de fragmento
