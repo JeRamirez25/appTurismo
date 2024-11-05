@@ -69,4 +69,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintVertical_bias="1.0" />
 
+    <Button
+        android:id="@+id/btnPrueba"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="21dp"
+        android:text="Prueba"
+        app:layout_constraintStart_toEndOf="@+id/StartBtn"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

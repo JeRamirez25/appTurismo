@@ -19,6 +19,16 @@ class Rutas : Fragment() {
         val root = inflater.inflate(R.layout.fragment_rutas,container, false)
 
         val buttonNav = root.findViewById<Button>(R.id.StartBtn)
+        val buttonPrueba = root.findViewById<Button>(R.id.btnPrueba)
+
+        buttonPrueba.setOnClickListener{
+            val fragmentManager = getFragmentManager()
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            if (fragmentTransaction != null) {
+                fragmentTransaction.replace(R.id.frame_layout, RutasHome())
+                fragmentTransaction.commit()
+            }
+        }
 
         buttonNav.setOnClickListener {
             //findNavController().navigate(R.id.action_rutas2_to_rutasParametros)
