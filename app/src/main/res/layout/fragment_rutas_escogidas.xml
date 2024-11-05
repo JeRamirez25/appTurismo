@@ -15,7 +15,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginEnd="145dp"
         android:fontFamily="@font/inter_bold"
-        android:text="Nombre de la ruta"
+        android:text="@string/nombre_de_la_ruta"
         android:textColor="#111"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,24 +34,26 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="51dp"
-        android:layout_height="51dp"
+        android:id="@+id/guardarBTN"
+        android:layout_width="56dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@color/white"
         android:src="@drawable/like_icon"
+        android:contentDescription="@string/boton_guardar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButton3"
-        android:layout_width="51dp"
-        android:layout_height="51dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@color/white"
         android:src="@drawable/cerrar_icon"
+        android:contentDescription="@string/cerrar_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

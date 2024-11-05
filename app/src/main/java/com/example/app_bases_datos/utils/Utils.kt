@@ -114,23 +114,19 @@ fun eliminarLugar(idUsuario: String, idLugar: String) {
 // Esta función AÑADE rutas a usuarios y las crea en la base de datos
 // Entrada: ID_USUARIO, ID_RUTA & NOMBRE
 
-fun crearRuta(idUsuario: String, nombreRuta: String) {
+fun crearRuta(idUsuario: String, nombreRuta: String, callback: (String) -> Unit) {
     val db = FirebaseFirestore.getInstance()
     val usuarioRef = db.collection("usuarios").document(idUsuario)
 
-    // Crea una nueva ruta
     val nuevaRuta = hashMapOf(
-        "nombre" to nombreRuta, // Nombre de la ruta o cualquier otro dato relevante
-        "lugares" to listOf<String>(), // Lista vacía de lugares por ahora
+        "nombre" to nombreRuta,
+        "lugares" to listOf<String>(),
     )
 
-    // Agregar la nueva ruta a la colección "rutas"
-    val rutaRef = db.collection("rutas").add(nuevaRuta)
+    db.collection("rutas").add(nuevaRuta)
         .addOnSuccessListener { documentReference ->
             val rutaId = documentReference.id
             Log.d("Firestore", "Ruta $rutaId creada y agregada a la base de datos de rutas")
-
-            // Ahora añade la ruta a las rutas favoritas del usuario
             usuarioRef.update("rutasFavoritas", FieldValue.arrayUnion(rutaId))
                 .addOnSuccessListener {
                     Log.d(
@@ -141,11 +137,14 @@ fun crearRuta(idUsuario: String, nombreRuta: String) {
                 .addOnFailureListener { e ->
                     Log.w("Firestore", "Error al agregar ruta a las favoritas del usuario", e)
                 }
+            callback(rutaId)
         }
         .addOnFailureListener { e ->
             Log.w("Firestore", "Error al crear la ruta en la base de datos", e)
         }
 }
+
+
 
 // Esta función ELIMINA rutas a usuarios y las elimina en la base de datos
 // Entrada: ID USUARIO & ID RUTA
@@ -207,7 +206,7 @@ fun añadirLugarRuta(idRuta: String, idLugar: String) {
     val db = Firebase.firestore
     val rutaRef = db.collection("rutas").document(idRuta)
 
-    // Añadir el lugar a la lista de lugares de la ruta
+    // Añade el lugar
     val rutaUpdate = rutaRef.update("lugares", FieldValue.arrayUnion(idLugar))
     rutaUpdate.addOnSuccessListener {
         Log.d("Firestore", "Lugar $idLugar añadido a la ruta $idRuta")
@@ -223,7 +222,7 @@ fun eliminarLugarRuta(idRuta: String, idLugar: String) {
     val db = Firebase.firestore
     val rutaRef = db.collection("rutas").document(idRuta)
 
-    // Eliminar la ruta de la base de datos
+    // Elimina la ruta
     val rutaUpdate = rutaRef.update("lugares", FieldValue.arrayRemove(idLugar))
     rutaUpdate.addOnSuccessListener {
         Log.d("Firestore", "Lugar ${idLugar} eliminado de la ruta $idRuta")
