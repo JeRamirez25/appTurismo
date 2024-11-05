@@ -42,32 +42,39 @@ class Buscar : Fragment() {
             if (user != null) {
                 val userEmail = user.email ?: ""
                 saludo(userEmail, tvWelcome)
+
+                // Obtener el ID de usuario desde Firestore basado en el correo
+                obtenerIdUsuario(userEmail) { userId ->
+                    if (userId != null) {
+                        // Ahora tienes el ID de usuario de Firestore y puedes pasarlo al Intent
+                        // Hacer algo con el userId, por ejemplo, guardarlo en una variable
+                        adapter.setOnItemClickListener(object : LugarAdapter.onItemClickListener {
+                            override fun onItemClick(position: Int) {
+                                val lugarSeleccionado = lugares[position]
+                                val intent = Intent(requireContext(), Detalles_de_lugares::class.java).apply {
+                                    putExtra("id", lugarSeleccionado.id)
+                                    putExtra("nombre", lugarSeleccionado.nombre)
+                                    putExtra("direccion", lugarSeleccionado.direccion)
+                                    putExtra("descripcion", lugarSeleccionado.descripcion)
+                                    putExtra("precio", lugarSeleccionado.precio)
+                                    putExtra("tiempo", lugarSeleccionado.tiempo)
+                                    putExtra("imagenURL", lugarSeleccionado.imagenURL)
+                                    putExtra("ID_USUARIO", userId) // Usamos el ID obtenido de Firestore
+                                }
+                                // Inicia la actividad
+                                startActivity(intent)
+                            }
+                        })
+                    } else {
+                        Log.e("BuscarFragment", "No se pudo obtener el ID del usuario.")
+                    }
+                }
             } else {
                 tvWelcome.text = "Hola, desconocido"
             }
 
             adapter = LugarAdapter(lugares)
             recyclerView.adapter = adapter
-            adapter.setOnItemClickListener(object : LugarAdapter.onItemClickListener {
-                override fun onItemClick(position: Int) {
-                    //Toast.makeText(requireContext(), "Click al item numero. "+ lugares[position], Toast.LENGTH_LONG).show()
-                    //val intent = Intent(requireContext(),LugarDetalle::class.java)
-                    val lugarSeleccionado = lugares[position]
-                    val intent = Intent(requireContext(), Detalles_de_lugares::class.java).apply {
-                        putExtra("id", lugarSeleccionado.id)
-                        putExtra("nombre", lugarSeleccionado.nombre)
-                        putExtra("direccion", lugarSeleccionado.direccion)
-                        putExtra("descripcion", lugarSeleccionado.descripcion)
-                        putExtra("precio", lugarSeleccionado.precio)
-                        putExtra("tiempo", lugarSeleccionado.tiempo)
-                        putExtra("imagenURL", lugarSeleccionado.imagenURL) // Asegúrate de que esta propiedad exista en tu clase Lugar
-                    }
-                    // Inicia la actividad
-                    startActivity(intent)
-
-                }
-
-            })
 
             cargarLugares()
 
@@ -91,13 +98,40 @@ class Buscar : Fragment() {
                 for (document in documents) {
                     val lugar = document.toObject(Lugar::class.java)
                     lugar.id = document.id
-
                     lugares.add(lugar)
                 }
                 adapter.notifyDataSetChanged()
             }
             .addOnFailureListener { exception ->
                 Log.e("InicioFragment", "Error al cargar lugares: ${exception.message}")
+            }
+    }
+
+    // Función para obtener el ID del usuario a partir de su correo
+    private fun obtenerIdUsuario(correo: String, onComplete: (String?) -> Unit) {
+        val db = Firebase.firestore
+        Log.d("FirestoreDebug", "Buscando ID de usuario con correo: $correo")
+
+        // Normalizar el correo a minúsculas para evitar problemas con mayúsculas/minúsculas
+        val correoNormalizado = correo.lowercase()
+
+        // Consulta a la colección "usuarios" por el correo normalizado
+        db.collection("usuarios")
+            .whereEqualTo("id", correoNormalizado) // Asegúrate de que el campo se llame "correo"
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    val usuarioId = documents.documents[0].id // El ID del documento es el ID de usuario
+                    Log.d("FirestoreDebug", "ID del usuario encontrado: $usuarioId")
+                    onComplete(usuarioId) // Pasar el ID del usuario a la función callback
+                } else {
+                    Log.d("FirestoreDebug", "No se encontraron documentos con el correo: $correo")
+                    onComplete(null) // Si no se encuentra el usuario
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.w("Firestore", "Error al buscar el usuario por correo", e)
+                onComplete(null) // Si hay un error, devolver null
             }
     }
 }

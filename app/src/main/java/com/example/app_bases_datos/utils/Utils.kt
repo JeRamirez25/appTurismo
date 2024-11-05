@@ -14,7 +14,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-// En esta función se crean los usuarios
+// Esta función permite crear usuarios
+// ENTRADA: nombre, correo
+
 fun crearUsuario(correo: String, nombre: String) {
     val db = Firebase.firestore
     val usuario = hashMapOf(
@@ -31,6 +33,69 @@ fun crearUsuario(correo: String, nombre: String) {
             Log.w("Firestore", "Error al crear usuario", e)
         }
 }
+
+// Esta función permite añadir Lugares a la BD
+// ENTRADA: nombre, categoria, descripcion, direccion, imagen, precio, tiempo
+// ATENCION: La base de datos obtiene otro parametro: GEOPOINT, este debe añadirse manualmente
+
+fun crearLugar(
+    nombre: String,
+    categoria: String,
+    descripcion: String,
+    direccion: String,
+    imagenURL: String,
+    precio: Int,
+    tiempo: Int
+) {
+    val db = FirebaseFirestore.getInstance()
+    val lugar = hashMapOf(
+        "categoria" to categoria,
+        "descripcion" to descripcion,
+        "direccion" to direccion,
+        "geopoint" to null,
+        "imagenURL" to imagenURL,
+        "nombre" to nombre,
+        "precio" to precio,
+        "tiempo" to tiempo
+    )
+    db.collection("lugares").add(lugar)
+        .addOnSuccessListener { documentReference ->
+            Log.d("Firestore", "Lugar creado correctamente con ID: ${documentReference.id}")
+        }
+        .addOnFailureListener { e ->
+            Log.w("Firestore", "Error al crear lugar", e)
+        }
+}
+
+// --------------------------------------------------- LUGARES FAVORITOS ------------------------------------------------------------
+
+fun añadirLugar(idUsuario: String, idLugar: String){
+    val db = FirebaseFirestore.getInstance()
+    val usuarioRef = db.collection("usuarios").document(idUsuario)
+
+    usuarioRef.update("lugaresFavoritos", FieldValue.arrayUnion(idLugar))
+        .addOnSuccessListener {
+            Log.d("Firestore", "Lugar con ID: $idLugar añadido a los lugares favoritos del usuario $idUsuario")
+        }
+        .addOnFailureListener { e ->
+            Log.w("Firestore", "Error al añadir lugar a los lugares favoritos del usuario $idUsuario", e)
+        }
+}
+
+fun eliminarLugar(idUsuario: String, idLugar: String){
+    val db = FirebaseFirestore.getInstance()
+    val usuarioRef = db.collection("usuarios").document(idUsuario)
+
+    usuarioRef.update("lugaresFavoritos", FieldValue.arrayRemove(idLugar))
+        .addOnSuccessListener {
+            Log.d("Firestore", "Lugar con ID: $idLugar eliminado de los lugares favoritos del usuario $idUsuario")
+        }
+        .addOnFailureListener { e ->
+            Log.w("Firestore", "Error al eliminar lugar de los lugares favoritos del usuario $idUsuario", e)
+        }
+}
+
+// ------------------------------------------------- RUTAS ----------------------------------------------------------
 
 // Esta función AÑADE rutas a usuarios y las crea en la base de datos
 // Entrada: ID_USUARIO, ID_RUTA & NOMBRE
@@ -113,11 +178,12 @@ suspend fun verificarRuta(idUsuario: String): Boolean {
     }
 }
 
+// ------------------------------------------------- LUGARES A RUTAS ----------------------------------------------------------
 
 // Esta función AÑADE lugares en las rutas de usuarios
 // ENTRADA: ID_RUTA & ID_LUGAR
 
-fun añadirLugar(idRuta: String, idLugar: String) {
+fun añadirLugarRuta(idRuta: String, idLugar: String) {
     val db = Firebase.firestore
     val rutaRef = db.collection("rutas").document(idRuta)
 
@@ -130,11 +196,10 @@ fun añadirLugar(idRuta: String, idLugar: String) {
     }
 }
 
-
 // Esta función ELIMINA lugares en las rutas de usuarios
 // ENTRADA: ID_USUARIO, ID_RUTA, ID_LUGAR
 
-fun eliminarLugar(idRuta: String, idLugar: String) {
+fun eliminarLugarRuta(idRuta: String, idLugar: String) {
     val db = Firebase.firestore
     val rutaRef = db.collection("rutas").document(idRuta)
 
@@ -147,6 +212,8 @@ fun eliminarLugar(idRuta: String, idLugar: String) {
     }
 }
 
+// ------------------------------------------------- BUSQUEDAS EN LA BD ------------------------------------------------------
+
 // Esta función permite obtener el ID del usuario a partir del correo
 // ENTRADA: CORREO_USUARIO
 
@@ -154,10 +221,11 @@ fun obtenerIdUsuario(correo: String, onComplete: (String?) -> Unit) {
     val db = FirebaseFirestore.getInstance()
 
     db.collection("usuarios")
-        .whereEqualTo("id", correo)
+        .whereEqualTo("correo", correo) // Asegúrate de que el campo se llama "correo" en tu Firestore
         .get()
         .addOnSuccessListener { documents ->
             if (!documents.isEmpty) {
+                // Asumiendo que el ID del documento es el ID del usuario
                 val usuarioId = documents.documents[0].id
                 onComplete(usuarioId) // Devuelve el ID del usuario
             } else {
@@ -166,7 +234,7 @@ fun obtenerIdUsuario(correo: String, onComplete: (String?) -> Unit) {
         }
         .addOnFailureListener { e ->
             Log.w("Firestore", "Error al buscar el usuario por correo", e)
-            onComplete(null)
+            onComplete(null) // Maneja el caso de error
         }
 }
 
@@ -289,38 +357,25 @@ fun saludo(email: String, infoTextView: TextView) {
             infoTextView.text = "Error al cargar el nombre"
         }
 }
-// Esta función permite añadir Lugares a la BD
-// ENTRADA: nombre, categoria, descripcion, direccion, imagen, precio, tiempo
-// ATENCION: La base de datos obtiene otro parametro: GEOPOINT, este debe añadirse manualmente
-
-fun crearLugar(
-    nombre: String,
-    categoria: String,
-    descripcion: String,
-    direccion: String,
-    imagenURL: String,
-    precio: Int,
-    tiempo: Int
-) {
+fun verificarLugarFavorito(idUsuario: String, idLugar: String, onComplete: (Boolean) -> Unit) {
     val db = FirebaseFirestore.getInstance()
-    val lugar = hashMapOf(
-        "categoria" to categoria,
-        "descripcion" to descripcion,
-        "direccion" to direccion,
-        "geopoint" to null,
-        "imagenURL" to imagenURL,
-        "nombre" to nombre,
-        "precio" to precio,
-        "tiempo" to tiempo
-    )
-    db.collection("lugares").add(lugar)
-        .addOnSuccessListener { documentReference ->
-            Log.d("Firestore", "Lugar creado correctamente con ID: ${documentReference.id}")
+    val usuarioRef = db.collection("usuarios").document(idUsuario)
+
+    usuarioRef.get()
+        .addOnSuccessListener { document ->
+            if (document.exists()) {
+                val lugaresFavoritos = document.get("lugaresFavoritos") as? List<String>
+                // Verificamos si el lugar especificado está en la lista de lugares favoritos
+                val esFavorito = lugaresFavoritos?.contains(idLugar) == true
+                onComplete(esFavorito)
+            } else {
+                // El documento del usuario no existe
+                onComplete(false)
+            }
         }
         .addOnFailureListener { e ->
-            Log.w("Firestore", "Error al crear lugar", e)
+            Log.w("Firestore", "Error al verificar lugar favorito del usuario", e)
+            onComplete(false) // En caso de error, devolvemos false
         }
 }
-
-
 

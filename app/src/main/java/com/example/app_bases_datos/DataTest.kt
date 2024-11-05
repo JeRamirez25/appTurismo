@@ -20,20 +20,26 @@ class DataTest : AppCompatActivity() {
         val ID_RUTA = "uUYedKiCO3puSTKZ2H4E"
         val ID_LUGAR = "0osp1XdSPtCjtoVDdAeg"
 
+        // LUGARES A FAVS
+
+        //añadirLugar(ID_USUARIO,ID_LUGAR)
+        //eliminarLugar(ID_USUARIO,ID_LUGAR)
+
+        // RUTAS
+
         lifecycleScope.launch {
             //Log.d("Firestore", "Hay rutas en el usuario? ${verificarRuta(ID_USUARIO)}")
             //crearRuta(ID_USUARIO,NOMBRE_RUTA)
-            eliminarRuta(ID_USUARIO,ID_RUTA)
+            //eliminarRuta(ID_USUARIO,ID_RUTA)
             //Log.d("Firestore", "Hay rutas en el usuario? ${verificarRuta(ID_USUARIO)}")
         }
+        //obtenerIdUsuario("kevinaxelhr18@gmail.com")
+        // LUGARES A RUTAS
 
-        //añadirLugar(ID_RUTA,ID_LUGAR)
-        //eliminarLugar(ID_RUTA,ID_LUGAR)
+        //añadirLugarRutas(ID_RUTA,ID_LUGAR)
+        //eliminarLugarRutas(ID_RUTA,ID_LUGAR)
 
         //crearUsuario("holaaa@gmail.com", "Sara")
-        //updateLugaresDeRuta("B07MOxIZT3J4ZRtRrAue","j75UBGTz64DvGhG1YB2Z")
-        //updateRutasFavoritas("8GIG2kWspsgproppONRL","aimxc5Nbk7yGKZP26om5")
-        //updateLugaresFavoritos("8GIG2kWspsgproppONRL","Ye2zT3Rv8iw1f67dsliF")
         //getDetallesRuta("8GIG2kWspsgproppONRL")
         //getDetallesLugares("8GIG2kWspsgproppONRL")
 
