@@ -69,29 +69,43 @@ fun crearLugar(
 
 // --------------------------------------------------- LUGARES FAVORITOS ------------------------------------------------------------
 
-fun añadirLugar(idUsuario: String, idLugar: String){
+fun añadirLugar(idUsuario: String, idLugar: String) {
     val db = FirebaseFirestore.getInstance()
     val usuarioRef = db.collection("usuarios").document(idUsuario)
 
     usuarioRef.update("lugaresFavoritos", FieldValue.arrayUnion(idLugar))
         .addOnSuccessListener {
-            Log.d("Firestore", "Lugar con ID: $idLugar añadido a los lugares favoritos del usuario $idUsuario")
+            Log.d(
+                "Firestore",
+                "Lugar con ID: $idLugar añadido a los lugares favoritos del usuario $idUsuario"
+            )
         }
         .addOnFailureListener { e ->
-            Log.w("Firestore", "Error al añadir lugar a los lugares favoritos del usuario $idUsuario", e)
+            Log.w(
+                "Firestore",
+                "Error al añadir lugar a los lugares favoritos del usuario $idUsuario",
+                e
+            )
         }
 }
 
-fun eliminarLugar(idUsuario: String, idLugar: String){
+fun eliminarLugar(idUsuario: String, idLugar: String) {
     val db = FirebaseFirestore.getInstance()
     val usuarioRef = db.collection("usuarios").document(idUsuario)
 
     usuarioRef.update("lugaresFavoritos", FieldValue.arrayRemove(idLugar))
         .addOnSuccessListener {
-            Log.d("Firestore", "Lugar con ID: $idLugar eliminado de los lugares favoritos del usuario $idUsuario")
+            Log.d(
+                "Firestore",
+                "Lugar con ID: $idLugar eliminado de los lugares favoritos del usuario $idUsuario"
+            )
         }
         .addOnFailureListener { e ->
-            Log.w("Firestore", "Error al eliminar lugar de los lugares favoritos del usuario $idUsuario", e)
+            Log.w(
+                "Firestore",
+                "Error al eliminar lugar de los lugares favoritos del usuario $idUsuario",
+                e
+            )
         }
 }
 
@@ -119,7 +133,10 @@ fun crearRuta(idUsuario: String, nombreRuta: String) {
             // Ahora añade la ruta a las rutas favoritas del usuario
             usuarioRef.update("rutasFavoritas", FieldValue.arrayUnion(rutaId))
                 .addOnSuccessListener {
-                    Log.d("Firestore", "Ruta $rutaId agregada a las rutas favoritas del usuario $idUsuario")
+                    Log.d(
+                        "Firestore",
+                        "Ruta $rutaId agregada a las rutas favoritas del usuario $idUsuario"
+                    )
                 }
                 .addOnFailureListener { e ->
                     Log.w("Firestore", "Error al agregar ruta a las favoritas del usuario", e)
@@ -141,7 +158,10 @@ fun eliminarRuta(idUsuario: String, idRuta: String) {
     // Eliminar la ruta de las rutas favoritas del usuario
     usuarioRef.update("rutasFavoritas", FieldValue.arrayRemove(idRuta))
         .addOnSuccessListener {
-            Log.d("Firestore", "La ruta $idRuta ha sido eliminada de las rutas favoritas del usuario $idUsuario")
+            Log.d(
+                "Firestore",
+                "La ruta $idRuta ha sido eliminada de las rutas favoritas del usuario $idUsuario"
+            )
         }
         .addOnFailureListener { e ->
             Log.w("Firestore", "Error al eliminar ruta de las favoritas del usuario", e)
@@ -221,20 +241,19 @@ fun obtenerIdUsuario(correo: String, onComplete: (String?) -> Unit) {
     val db = FirebaseFirestore.getInstance()
 
     db.collection("usuarios")
-        .whereEqualTo("correo", correo) // Asegúrate de que el campo se llama "correo" en tu Firestore
+        .whereEqualTo("id", correo)
         .get()
         .addOnSuccessListener { documents ->
             if (!documents.isEmpty) {
-                // Asumiendo que el ID del documento es el ID del usuario
                 val usuarioId = documents.documents[0].id
-                onComplete(usuarioId) // Devuelve el ID del usuario
+                onComplete(usuarioId)
             } else {
-                onComplete(null) // No se encontró el usuario
+                onComplete(null)
             }
         }
         .addOnFailureListener { e ->
             Log.w("Firestore", "Error al buscar el usuario por correo", e)
-            onComplete(null) // Maneja el caso de error
+            onComplete(null)
         }
 }
 
@@ -347,7 +366,7 @@ fun saludo(email: String, infoTextView: TextView) {
         .addOnSuccessListener { documents ->
             if (!documents.isEmpty) {
                 val nombre = documents.documents[0].getString("nombre")
-                infoTextView.text = "Hola, "+nombre // Muestra el nombre en el TextView
+                infoTextView.text = "Hola, " + nombre // Muestra el nombre en el TextView
             } else {
                 infoTextView.text = "Desconocido"
             }
@@ -357,6 +376,7 @@ fun saludo(email: String, infoTextView: TextView) {
             infoTextView.text = "Error al cargar el nombre"
         }
 }
+
 fun verificarLugarFavorito(idUsuario: String, idLugar: String, onComplete: (Boolean) -> Unit) {
     val db = FirebaseFirestore.getInstance()
     val usuarioRef = db.collection("usuarios").document(idUsuario)

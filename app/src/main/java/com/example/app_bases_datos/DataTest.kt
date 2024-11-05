@@ -33,7 +33,14 @@ class DataTest : AppCompatActivity() {
             //eliminarRuta(ID_USUARIO,ID_RUTA)
             //Log.d("Firestore", "Hay rutas en el usuario? ${verificarRuta(ID_USUARIO)}")
         }
-        //obtenerIdUsuario("kevinaxelhr18@gmail.com")
+
+//        obtenerIdUsuario(correo) { usuarioId ->
+//            if (usuarioId != null) {
+//                Log.d("MainActivity", "ID del usuario: $usuarioId")
+//            } else {
+//                Log.d("MainActivity", "No se encontró el usuario con ese correo.")
+//            }
+//        }
         // LUGARES A RUTAS
 
         //añadirLugarRutas(ID_RUTA,ID_LUGAR)

@@ -1,7 +1,6 @@
 package com.example.app_bases_datos
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.app_bases_datos.utils.saludo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -43,13 +41,12 @@ class RutasEscogidas : Fragment() {
         recyclerView.adapter = adaptadorEscogidosRuta
 
         val args = this.arguments
-        val texto = args?.getStringArrayList("rutaEstablecida")
-        val text = args?.getString("nombreRuta")
+        val listaLugares = args?.getStringArrayList("rutaEstablecida")
+        val nombreRuta = args?.getString("nombreRuta")
 
-        textView.text = text ?: "Nombre de ruta no encontrado"
-
-        if (texto != null) {
-            cargarLugaresEscogidos(texto)
+        textView.text = nombreRuta ?: "Nombre de ruta no encontrado"
+        if (listaLugares != null) {
+            cargarLugaresEscogidos(listaLugares)
         } else {
             Log.d("RutasEscogidasFragment", "No hay datos en la lista de rutaEstablecida")
         }

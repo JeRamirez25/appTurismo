@@ -26,7 +26,7 @@ class GuardarEnCategoria : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.guardar_en_categoria)
+        setContentView(R.layout.activity_guardar_en_categoria)
 
         // Aquí traigo el id del lugar y el id del usuario actual
         val lugarId = intent.getStringExtra("id") ?: ""
@@ -59,16 +59,23 @@ class GuardarEnCategoria : AppCompatActivity() {
                                         val ruta = rutaDocument.toObject(RutaModelo::class.java)
                                         if (ruta != null) {
                                             ruta.id = rutaDocument.id
-                                            Log.d("PRUEBA","${ruta.id}")
+                                            Log.d("PRUEBA", "${ruta.id}")
                                             listaRutas.add(ruta)
                                             Log.d("Hola", "$listaRutas")
                                             Log.d("HolaPrueba", "$ruta.id")
                                             adaptadorRutas.notifyDataSetChanged()
-                                            Log.d("GuardarEnCategoria", "Ruta añadida: ${ruta.nombre}")
-                                            Log.d("GuardarEnCategoria", "Lista de rutas actual: $listaRutas") // Verifica la lista completa
+                                            Log.d(
+                                                "GuardarEnCategoria",
+                                                "Ruta añadida: ${ruta.nombre}"
+                                            )
+                                            Log.d(
+                                                "GuardarEnCategoria",
+                                                "Lista de rutas actual: $listaRutas"
+                                            ) // Verifica la lista completa
                                             btnGuardarLugar.setOnClickListener {
-                                                añadirLugarRuta(ruta.id,lugarId)
-                                                val intent = Intent(this, Detalles_de_lugares::class.java)
+                                                añadirLugarRuta(ruta.id, lugarId)
+                                                val intent =
+                                                    Intent(this, Detalles_de_lugares::class.java)
                                                 startActivity(intent)
                                             }
                                         }
@@ -77,10 +84,6 @@ class GuardarEnCategoria : AppCompatActivity() {
                         }
                     }
                 }
-
-
         }
-
-
     }
 }
