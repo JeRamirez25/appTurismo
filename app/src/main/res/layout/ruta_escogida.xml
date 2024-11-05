@@ -31,26 +31,28 @@
 
             <TextView
                 android:id="@+id/cantidadLugares"
-                android:layout_width="151dp"
-                android:layout_height="12dp"
+                android:layout_width="149dp"
+                android:layout_height="19dp"
                 android:layout_margin="5dp"
                 android:text="Lugares"
                 android:textColor="@color/black"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.263"
+                app:layout_constraintHorizontal_bias="0.258"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.703" />
 
             <TextView
                 android:id="@+id/nombreRuta"
                 android:layout_width="153dp"
-                android:layout_height="22dp"
+                android:layout_height="33dp"
                 android:layout_marginHorizontal="5dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="Nombre"
                 android:textColor="@color/black"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.242"
