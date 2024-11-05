@@ -1,6 +1,7 @@
 package com.example.app_bases_datos
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -32,12 +33,9 @@ class Detalles_de_lugares : AppCompatActivity() {
             findViewById<TextView>(R.id.tvNombreLugar).text = nombre
             findViewById<TextView>(R.id.tvDireccionLugar).text = direccion
             findViewById<TextView>(R.id.tvDescripcionLugar).text = descripcion
-
             val precioLugar = findViewById<TextView>(R.id.tvPrecioLugar)
-
             val horas = tiempoVisita / 60.0
             val tiempoTexto = String.format("%.1f horas", horas)
-
             findViewById<TextView>(R.id.tvTiempoLugar).text = tiempoTexto
 
             if (precio == 0) {
@@ -51,6 +49,7 @@ class Detalles_de_lugares : AppCompatActivity() {
             val likeOn = findViewById<ImageView>(R.id.LikeOn)
             val ID_LUGAR = intent.getStringExtra("id").toString()
             var ID_USUARIO = intent.getStringExtra("ID_USUARIO") ?: ""
+            val btnGuardar = findViewById<ImageView>(R.id.ivGuardar)
 
             verificarLugarFavorito(ID_USUARIO, ID_LUGAR) { esFavorito ->
                 if (esFavorito) {
@@ -62,6 +61,13 @@ class Detalles_de_lugares : AppCompatActivity() {
                     likeOff.visibility = View.VISIBLE
                     likeOn.visibility = View.INVISIBLE
                 }
+            }
+
+            btnGuardar.setOnClickListener{
+                val intent = Intent(this, GuardarEnCategoria::class.java)
+                intent.putExtra("id", ID_LUGAR)
+                intent.putExtra("ID_USUARIO", ID_USUARIO)
+                startActivity(intent)
             }
 
             likeOn.setOnClickListener {
@@ -76,7 +82,6 @@ class Detalles_de_lugares : AppCompatActivity() {
                 añadirLugar(ID_USUARIO,ID_LUGAR)
             }
 
-            // Cargar la imagen usando Glide u otra librería
             Glide.with(this).load(imagenUrl).into(findViewById(R.id.ivFotoLugar))
         }
     }
