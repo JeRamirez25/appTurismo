@@ -43,11 +43,8 @@ class Buscar : Fragment() {
                 val userEmail = user.email ?: ""
                 saludo(userEmail, tvWelcome)
 
-                // Obtener el ID de usuario desde Firestore basado en el correo
                 obtenerIdUsuario(userEmail) { userId ->
                     if (userId != null) {
-                        // Ahora tienes el ID de usuario de Firestore y puedes pasarlo al Intent
-                        // Hacer algo con el userId, por ejemplo, guardarlo en una variable
                         adapter.setOnItemClickListener(object : LugarAdapter.onItemClickListener {
                             override fun onItemClick(position: Int) {
                                 val lugarSeleccionado = lugares[position]
@@ -60,8 +57,8 @@ class Buscar : Fragment() {
                                     putExtra("tiempo", lugarSeleccionado.tiempo)
                                     putExtra("imagenURL", lugarSeleccionado.imagenURL)
                                     putExtra("ID_USUARIO", userId) // Usamos el ID obtenido de Firestore
+                                    Log.d("prueba_usuario", userId)
                                 }
-                                // Inicia la actividad
                                 startActivity(intent)
                             }
                         })

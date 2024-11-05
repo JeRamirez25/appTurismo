@@ -1,6 +1,7 @@
 package com.example.app_bases_datos
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,6 @@ class LugarFavoritoAdapter(private val lugaresList: MutableList<FavoritoLugar>) 
         val direccion: TextView = view.findViewById(R.id.direccionLugarFavorito)
         val tiempo: TextView = view.findViewById(R.id.tiempoLugarFavorito)
         val precio: TextView = view.findViewById(R.id.precioLugarFavorito)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LugarViewHolder {
@@ -35,6 +35,18 @@ class LugarFavoritoAdapter(private val lugaresList: MutableList<FavoritoLugar>) 
         holder.tiempo.text = "$horas horas"
         holder.precio.text = lugar.precio.toString()
         Glide.with(holder.itemView.context).load(lugar.imagenURL).into(holder.imagen)
+
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, DetallesLugarRuta::class.java)
+            intent.putExtra("nombre", lugar.nombre)
+            intent.putExtra("direccion", lugar.direccion)
+            intent.putExtra("tiempo", "$horas horas")
+            intent.putExtra("precio", lugar.precio)
+            intent.putExtra("imagenURL", lugar.imagenURL)
+            intent.putExtra("descripcion", lugar.descripcion)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = lugaresList.size

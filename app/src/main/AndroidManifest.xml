@@ -15,7 +15,12 @@
         <activity
             android:name=".Detalles_de_lugares"
             android:exported="false" />
-
+        <activity
+            android:name=".DetallesLugarRuta"
+            android:exported="false" />
+        <activity
+            android:name=".DetallesLugaresFavoritos"
+            android:exported="false" />
         <activity
             android:name=".GuardarEnCategoria"
             android:exported="false" />

@@ -10,4 +10,5 @@ data class FavoritoLugar(
     val imagenURL: String = "",
     val precio: Int = 0,
     val categoria: String = "",
+    val descripcion: String = "",
 )

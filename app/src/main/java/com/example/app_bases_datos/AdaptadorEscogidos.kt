@@ -1,6 +1,7 @@
 package com.example.app_bases_datos
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,17 @@ class AdaptadorEscogidos(private val lugaresEscogidos: MutableList<Lugar>) :
             val horas = (lugar.tiempo / 60.0 * 10).toInt() / 10.0
             tiempoE.text = "$horas horas"
             Glide.with(itemView.context).load(lugar.imagenURL).into(imagenE)
+
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, DetallesLugarRuta::class.java)
+                intent.putExtra("nombre", lugar.nombre)
+                intent.putExtra("direccion", lugar.direccion)
+                intent.putExtra("descripcion", lugar.descripcion)
+                intent.putExtra("precio", lugar.precio)
+                intent.putExtra("tiempo", lugar.tiempo)
+                intent.putExtra("imagenURL", lugar.imagenURL)
+                itemView.context.startActivity(intent)
+            }
         }
     }
 }
