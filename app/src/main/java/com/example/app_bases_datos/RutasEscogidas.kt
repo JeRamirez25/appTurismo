@@ -75,6 +75,12 @@ class RutasEscogidas : Fragment() {
                                     }
                                 }
                             }
+                            val fragmentManager = getFragmentManager()
+                            val fragmentTransaction = fragmentManager?.beginTransaction()
+                            if (fragmentTransaction != null) {
+                                fragmentTransaction.replace(R.id.frame_layout, Rutas())
+                                fragmentTransaction.commit()
+                            }
                         }
                     }
 
