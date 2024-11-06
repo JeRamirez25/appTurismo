@@ -22,9 +22,6 @@
             android:name=".CrearRutaNueva"
             android:exported="false" />
         <activity
-            android:name=".DetallesLugaresFavoritos"
-            android:exported="false" />
-        <activity
             android:name=".GuardarEnCategoria"
             android:exported="false" />
 
@@ -45,9 +42,6 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LugarDetalle"
             android:exported="false" />
         <activity
             android:name=".DataTest"

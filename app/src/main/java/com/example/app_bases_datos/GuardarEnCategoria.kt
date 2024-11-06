@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,9 +38,18 @@ class GuardarEnCategoria : AppCompatActivity() {
         btnGuardarLugar = findViewById(R.id.btnGuardarDevolverse)
         btnCrearRuta = findViewById(R.id.btnCrearRutaNueva)
 
+        val backBtn = findViewById<ImageButton>(R.id.imageButton5)
+
+        backBtn.setOnClickListener{
+            val intent = Intent(this, Detalles_de_lugares::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         btnCrearRuta.setOnClickListener {
             val intent = Intent(this, CrearRutaNueva::class.java)
             startActivity(intent)
+            finish()
         }
 
         adaptadorRutas = RutaAdapter(listaRutas, lugarId, usuarioId) { ruta, isChecked ->
@@ -91,6 +101,7 @@ class GuardarEnCategoria : AppCompatActivity() {
                         }
                     }
                 }
+
         }
     }
 }
