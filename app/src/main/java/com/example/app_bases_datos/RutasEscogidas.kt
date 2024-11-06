@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -86,6 +85,17 @@ class RutasEscogidas : Fragment() {
 
                 } else {
                     Log.d("MainActivity", "No se encontró el usuario con ese correo.")
+                }
+            }
+            val backBtn = view.findViewById<ImageButton>(R.id.backBtnEscogidas)
+
+            backBtn.setOnClickListener{
+                val fragment = Rutas()
+                val fragmentManager = getFragmentManager()
+                val fragmentTransaction = fragmentManager?.beginTransaction()
+                if (fragmentTransaction != null) {
+                    fragmentTransaction.replace(R.id.frame_layout, fragment)
+                    fragmentTransaction.commit()
                 }
             }
         }

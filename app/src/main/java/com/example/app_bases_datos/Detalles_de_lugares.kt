@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -17,11 +18,16 @@ import com.example.app_bases_datos.utils.obtenerIdUsuario
 import com.example.app_bases_datos.utils.verificarLugarFavorito
 
 class Detalles_de_lugares : AppCompatActivity() {
+
+    lateinit var backBtn : ImageButton
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detalles_de_lugares)
+
+            backBtn= findViewById(R.id.boton_cerrar)
 
             val nombre = intent.getStringExtra("nombre")
             val direccion = intent.getStringExtra("direccion")
@@ -80,6 +86,10 @@ class Detalles_de_lugares : AppCompatActivity() {
                 likeOff.visibility = View.INVISIBLE
                 likeOn.visibility = View.VISIBLE
                 añadirLugar(ID_USUARIO,ID_LUGAR)
+            }
+
+            backBtn.setOnClickListener{
+                this.onBackPressed()
             }
 
             Glide.with(this).load(imagenUrl).into(findViewById(R.id.ivFotoLugar))

@@ -2,6 +2,7 @@ package com.example.app_bases_datos
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +10,14 @@ import com.bumptech.glide.Glide
 
 class DetallesLugarRuta : AppCompatActivity() {
 
+    lateinit var backBtn : ImageButton
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detalles_del_lugar_ruta)
+
+        backBtn= findViewById(R.id.boton_cerrar1)
 
         val nombre = intent.getStringExtra("nombre")
         val direccion = intent.getStringExtra("direccion")
@@ -39,6 +44,10 @@ class DetallesLugarRuta : AppCompatActivity() {
         descripcionDetallesRuta.text = descripcion
         tiempoDetallesRuta.text = tiempo.toString()
         precioDetallesRuta.text = precio.toString()
+
+        backBtn.setOnClickListener{
+            this.onBackPressed()
+        }
 
         Glide.with(this).load(imagenURL).into(imagenDetallesRuta)
     }
