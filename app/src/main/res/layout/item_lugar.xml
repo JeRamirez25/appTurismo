@@ -21,20 +21,20 @@
             android:textStyle="bold"
             android:paddingTop="8dp"
             android:textColor="@color/black"
-            android:text="Nombre"/>
+            android:text="@string/nombre"/>
 
         <TextView
             android:id="@+id/tvDireccionLugar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="4dp"
-            android:text="direccion"/>
+            android:text="@string/direccion"/>
 
         <TextView
             android:id="@+id/tvTiempo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="4dp"
-            android:text="tiempo"/>
+            android:text="@string/tiempo"/>
 
     </LinearLayout>

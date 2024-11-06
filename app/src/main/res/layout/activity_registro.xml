@@ -17,8 +17,7 @@
         android:contentDescription="@string/back_icon"
         android:src="@drawable/back_icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/Logo"
@@ -52,10 +51,10 @@
         android:hint="@string/nombre"
         android:textColor="@color/black"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/emailInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/IMG01"
-        app:layout_constraintBottom_toTopOf="@id/emailInput"/>
+        app:layout_constraintTop_toBottomOf="@id/IMG01" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/emailInput"

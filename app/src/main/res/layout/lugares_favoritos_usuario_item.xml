@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:paddingTop="8dp"
-                android:text="Nombre"
+                android:text="@string/nombre"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:paddingTop="4dp"
-                android:text="direccion" />
+                android:text="@string/direccion" />
 
             <TextView
                 android:id="@+id/tiempoLugarFavorito"
@@ -48,14 +48,14 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:paddingTop="4dp"
-                android:text="tiempo" />
+                android:text="@string/tiempo" />
 
             <TextView
                 android:id="@+id/precioLugarFavorito"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Precio" />
+                android:text="@string/precio" />
 
 
         </LinearLayout>

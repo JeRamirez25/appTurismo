@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".RutasHome">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
@@ -14,7 +13,7 @@
         android:layout_marginStart="125dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="125dp"
-        android:text="MIS RUTAS"
+        android:text="@string/mis_rutas"
         android:textAllCaps="false"
         android:textColor="#111"
         android:textSize="30sp"
@@ -29,7 +28,7 @@
         android:layout_height="45dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/ripple"
-        android:text="GENERAR RUTA NUEVA"
+        android:text="@string/generar_ruta_nueva"
         android:textColor="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

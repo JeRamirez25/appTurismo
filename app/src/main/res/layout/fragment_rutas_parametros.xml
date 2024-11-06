@@ -14,7 +14,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="65dp"
         android:autofillHints="Nombre de la ruta"
-        android:hint="Ingrese el nombre de la ruta"
+        android:hint="@string/ingrese_el_nombre_de_la_ruta"
         android:inputType="textShortMessage"
         android:textColor="#111111"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Seleccione los lugares que gustaría visitar:"
+        android:text="@string/seleccione_los_lugares_que_gustar_a_visitar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_nombre_ruta" />
@@ -39,7 +39,7 @@
         android:layout_marginTop="28dp"
         android:scaleX="1"
         android:scaleY="1"
-        android:text="Museos"
+        android:text="@string/museos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -51,7 +51,7 @@
         android:layout_marginTop="16dp"
         android:scaleX="1"
         android:scaleY="1"
-        android:text="Parques"
+        android:text="@string/parques"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/check_museos" />
 
@@ -63,7 +63,7 @@
         android:layout_marginTop="16dp"
         android:scaleX="1"
         android:scaleY="1"
-        android:text="Recreativos"
+        android:text="@string/recreativos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/check_parques" />
 
@@ -75,7 +75,7 @@
         android:layout_marginTop="16dp"
         android:scaleX="1"
         android:scaleY="1"
-        android:text="Históricos"
+        android:text="@string/hist_ricos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/check_recreativos" />
 
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="16dp"
-        android:text="Gastronomía"
+        android:text="@string/gastronom_a"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/check_historicos" />
 
@@ -94,7 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="¿Con cuánto tiempo dispone? (en horas)"
+        android:text="@string/con_cu_nto_tiempo_dispone_en_horas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/check_gastronomia" />
@@ -116,14 +116,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="32dp"
         android:background="@drawable/ripple"
-        android:text="Generar Ruta"
+        android:text="@string/generar_ruta"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/backBtnParametros"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
