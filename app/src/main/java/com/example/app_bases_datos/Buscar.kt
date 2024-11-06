@@ -40,14 +40,17 @@ class Buscar : Fragment() {
 
             val user = auth.currentUser
             if (user != null) {
+
                 val userEmail = user.email ?: ""
                 saludo(userEmail, tvWelcome)
 
                 obtenerIdUsuario(userEmail) { userId ->
                     if (userId != null) {
+
                         adapter.setOnItemClickListener(object : LugarAdapter.onItemClickListener {
                             override fun onItemClick(position: Int) {
                                 val lugarSeleccionado = lugares[position]
+                                Log.d("listaLugares", "$lugarSeleccionado")
                                 val intent = Intent(requireContext(), Detalles_de_lugares::class.java).apply {
                                     putExtra("id", lugarSeleccionado.id)
                                     putExtra("nombre", lugarSeleccionado.nombre)
@@ -74,6 +77,8 @@ class Buscar : Fragment() {
             recyclerView.adapter = adapter
 
             cargarLugares()
+
+
 
             recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
