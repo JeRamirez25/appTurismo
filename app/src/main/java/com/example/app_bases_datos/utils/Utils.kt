@@ -365,7 +365,7 @@ fun saludo(email: String, infoTextView: TextView) {
         .addOnSuccessListener { documents ->
             if (!documents.isEmpty) {
                 val nombre = documents.documents[0].getString("nombre")
-                infoTextView.text = "Hola, " + nombre // Muestra el nombre en el TextView
+                infoTextView.text = "Hola, " + nombre
             } else {
                 infoTextView.text = "Desconocido"
             }
@@ -376,22 +376,23 @@ fun saludo(email: String, infoTextView: TextView) {
         }
 }
 
-fun verificarLugarFavorito(idUsuario: String, idLugar: String, onComplete: (Boolean) -> Unit) {
-    val db = FirebaseFirestore.getInstance()
-    val usuarioRef = db.collection("usuarios").document(idUsuario)
+fun verificarLugarFavorito(ID_USUARIO: String, ID_LUGAR: String, callback: (Boolean) -> Unit) {
+    val db = Firebase.firestore
 
-    usuarioRef.get()
-        .addOnSuccessListener { document ->
-            if (document.exists()) {
-                val lugaresFavoritos = document.get("lugaresFavoritos") as? List<String>
-                val esFavorito = lugaresFavoritos?.contains(idLugar) == true
-                onComplete(esFavorito)
-            } else {
-                onComplete(false)
-            }
+    if (ID_USUARIO.isEmpty()) {
+        Log.e("verificarLugarFavorito", "ID de usuario vacío")
+        callback(false)
+        return
+    }
+
+    db.collection("usuarios").document(ID_USUARIO).collection("lugaresFavoritos").document(ID_LUGAR)
+        .get()
+        .addOnSuccessListener { documentSnapshot ->
+            val esFavorito = documentSnapshot.exists()
+            callback(esFavorito)
         }
         .addOnFailureListener { e ->
-            Log.w("Firestore", "Error al verificar lugar favorito del usuario", e)
-            onComplete(false) // En caso de error, devolvemos false
+            Log.e("Firestore", "Error al verificar lugar favorito", e)
+            callback(false)
         }
 }

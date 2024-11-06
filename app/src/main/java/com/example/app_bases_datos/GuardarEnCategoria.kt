@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -12,16 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_bases_datos.utils.añadirLugarRuta
 import com.example.app_bases_datos.utils.eliminarLugarRuta
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class GuardarEnCategoria : AppCompatActivity() {
 
-    val db = Firebase.firestore
-    val listaRutaFavoritasId = mutableListOf<String>()
-    val listaRutas = mutableListOf<RutaModelo>()
+    private val db = Firebase.firestore
+    private val listaRutaFavoritasId = mutableListOf<String>()
+    private val listaRutas = mutableListOf<RutaModelo>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var btnGuardarLugar: Button
     private lateinit var btnCrearRuta: Button
@@ -33,7 +30,6 @@ class GuardarEnCategoria : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_guardar_en_categoria)
 
-        // Obtener los IDs
         val lugarId = intent.getStringExtra("id") ?: ""
         val usuarioId = intent.getStringExtra("ID_USUARIO") ?: ""
 
@@ -43,8 +39,7 @@ class GuardarEnCategoria : AppCompatActivity() {
         val backBtn = findViewById<ImageButton>(R.id.imageButton5)
 
         backBtn.setOnClickListener {
-            val intent = Intent(this, Detalles_de_lugares::class.java)
-            startActivity(intent)
+            setResult(RESULT_OK)
             finish()
         }
 
@@ -61,25 +56,20 @@ class GuardarEnCategoria : AppCompatActivity() {
         recyclerView.adapter = adaptadorRutas
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Mostrar rutas
         cargarRutas(usuarioId, lugarId)
 
         btnGuardarLugar.setOnClickListener {
             rutasSeleccionadas.forEach { (rutaId, isChecked) ->
                 if (isChecked) {
-                    // Si está seleccionado, añadir el lugar a la ruta
                     añadirLugarRuta(rutaId, lugarId)
                     Log.d("GuardarEnCategoria", "Lugar añadido a la ruta: $rutaId")
                 } else {
-                    // Si no está seleccionado, eliminar el lugar de la ruta
                     eliminarLugarRuta(rutaId, lugarId)
                     Log.d("GuardarEnCategoria", "Lugar eliminado de la ruta: $rutaId")
                 }
             }
-            Intent(this, Detalles_de_lugares::class.java).also {
-                startActivity(it)
-                finish()
-            }
+            setResult(RESULT_OK)
+            finish()
         }
     }
 
