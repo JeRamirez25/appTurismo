@@ -384,11 +384,9 @@ fun verificarLugarFavorito(idUsuario: String, idLugar: String, onComplete: (Bool
         .addOnSuccessListener { document ->
             if (document.exists()) {
                 val lugaresFavoritos = document.get("lugaresFavoritos") as? List<String>
-                // Verificamos si el lugar especificado está en la lista de lugares favoritos
                 val esFavorito = lugaresFavoritos?.contains(idLugar) == true
                 onComplete(esFavorito)
             } else {
-                // El documento del usuario no existe
                 onComplete(false)
             }
         }
@@ -397,4 +395,3 @@ fun verificarLugarFavorito(idUsuario: String, idLugar: String, onComplete: (Bool
             onComplete(false) // En caso de error, devolvemos false
         }
 }
-

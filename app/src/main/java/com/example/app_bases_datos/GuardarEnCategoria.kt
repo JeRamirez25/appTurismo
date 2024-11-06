@@ -4,14 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_bases_datos.utils.añadirLugarRuta
+import com.example.app_bases_datos.utils.eliminarLugarRuta
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 
 class GuardarEnCategoria : AppCompatActivity() {
@@ -30,17 +33,16 @@ class GuardarEnCategoria : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_guardar_en_categoria)
 
-        // Aquí traigo el id del lugar y el id del usuario actual
+        // Obtener los IDs
         val lugarId = intent.getStringExtra("id") ?: ""
         val usuarioId = intent.getStringExtra("ID_USUARIO") ?: ""
 
         recyclerView = findViewById(R.id.recyclerViewRutasFavoritasGuardar)
         btnGuardarLugar = findViewById(R.id.btnGuardarDevolverse)
         btnCrearRuta = findViewById(R.id.btnCrearRutaNueva)
-
         val backBtn = findViewById<ImageButton>(R.id.imageButton5)
 
-        backBtn.setOnClickListener{
+        backBtn.setOnClickListener {
             val intent = Intent(this, Detalles_de_lugares::class.java)
             startActivity(intent)
             finish()
@@ -55,53 +57,74 @@ class GuardarEnCategoria : AppCompatActivity() {
         adaptadorRutas = RutaAdapter(listaRutas, lugarId, usuarioId) { ruta, isChecked ->
             rutasSeleccionadas[ruta.id] = isChecked
         }
+
         recyclerView.adapter = adaptadorRutas
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val userEmail = FirebaseAuth.getInstance().currentUser?.email
-        if (userEmail != null) {
-            db.collection("usuarios").whereEqualTo("id", userEmail)
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    if (!querySnapshot.isEmpty) {
-                        val documento = querySnapshot.documents[0]
-                        listaRutaFavoritasId.addAll(documento.get("rutasFavoritas") as List<String>)
+        // Mostrar rutas
+        cargarRutas(usuarioId, lugarId)
 
-                        listaRutaFavoritasId.forEach { rutaId ->
-                            db.collection("rutas")
-                                .document(rutaId)
-                                .get()
-                                .addOnSuccessListener { rutaDocument ->
-                                    if (rutaDocument.exists()) {
-                                        val ruta = rutaDocument.toObject(RutaModelo::class.java)
-                                        if (ruta != null) {
-                                            ruta.id = rutaDocument.id
-                                            Log.d("PRUEBA", "${ruta.id}")
-                                            listaRutas.add(ruta)
-                                            Log.d("Hola", "$listaRutas")
-                                            Log.d("HolaPrueba", "$ruta.id")
-                                            adaptadorRutas.notifyDataSetChanged()
-                                            Log.d(
-                                                "GuardarEnCategoria",
-                                                "Ruta añadida: ${ruta.nombre}"
-                                            )
-                                            Log.d(
-                                                "GuardarEnCategoria",
-                                                "Lista de rutas actual: $listaRutas"
-                                            ) // Verifica la lista completa
-                                            btnGuardarLugar.setOnClickListener {
-                                                añadirLugarRuta(ruta.id, lugarId)
-                                                val intent =
-                                                    Intent(this, Detalles_de_lugares::class.java)
-                                                startActivity(intent)
-                                            }
-                                        }
-                                    }
-                                }
+        btnGuardarLugar.setOnClickListener {
+            rutasSeleccionadas.forEach { (rutaId, isChecked) ->
+                if (isChecked) {
+                    // Si está seleccionado, añadir el lugar a la ruta
+                    añadirLugarRuta(rutaId, lugarId)
+                    Log.d("GuardarEnCategoria", "Lugar añadido a la ruta: $rutaId")
+                } else {
+                    // Si no está seleccionado, eliminar el lugar de la ruta
+                    eliminarLugarRuta(rutaId, lugarId)
+                    Log.d("GuardarEnCategoria", "Lugar eliminado de la ruta: $rutaId")
+                }
+            }
+            Intent(this, Detalles_de_lugares::class.java).also {
+                startActivity(it)
+                finish()
+            }
+        }
+    }
+
+    private fun cargarRutas(usuarioId: String, lugarId: String) {
+        db.collection("usuarios")
+            .document(usuarioId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val rutasFavoritas = document.get("rutasFavoritas") as? List<String>
+                    if (rutasFavoritas != null && rutasFavoritas.isNotEmpty()) {
+                        listaRutaFavoritasId.addAll(rutasFavoritas)
+                        cargarDatosDeRutas()
+                    } else {
+                        Log.d("Firestore", "El usuario no tiene rutas favoritas.")
+                    }
+                } else {
+                    Log.d("Firestore", "No se encontró el documento del usuario con ID: $usuarioId")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error al cargar el documento del usuario", e)
+            }
+    }
+
+    private fun cargarDatosDeRutas() {
+        listaRutaFavoritasId.forEach { rutaId ->
+            db.collection("rutas")
+                .document(rutaId)
+                .get()
+                .addOnSuccessListener { rutaDocument ->
+                    if (rutaDocument.exists()) {
+                        val ruta = rutaDocument.toObject(RutaModelo::class.java)
+                        if (ruta != null) {
+                            ruta.id = rutaDocument.id
+                            listaRutas.add(ruta)
                         }
+                    } else {
+                        Log.d("Firestore", "Ruta no encontrada: $rutaId")
                     }
                 }
-
+                .addOnCompleteListener {
+                    adaptadorRutas.notifyDataSetChanged()
+                    Log.d("GuardarEnCategoria", "Rutas cargadas: ${listaRutas.size}")
+                }
         }
     }
 }
