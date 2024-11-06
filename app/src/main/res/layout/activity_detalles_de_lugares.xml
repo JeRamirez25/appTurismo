@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Detalles_de_lugares">
 
     <ScrollView
@@ -24,10 +25,10 @@
 
                 <ImageButton
                     android:id="@+id/boton_cerrar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="35dp"
                     android:layout_marginBottom="8dp"
                     android:background="@color/white"
                     android:src="@drawable/back_icon"
@@ -96,7 +97,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.228"
-                    app:srcCompat="@drawable/like_icon" />
+                    app:srcCompat="@drawable/add_route_icon" />
 
                 <ImageView
                     android:id="@+id/LikeOff"

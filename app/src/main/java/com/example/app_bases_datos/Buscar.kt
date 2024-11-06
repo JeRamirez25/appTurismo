@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
@@ -36,6 +37,8 @@ class Buscar : Fragment() {
         try {
             val tvWelcome = view.findViewById<TextView>(R.id.tvBienvenido)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+            val searchView = view.findViewById<SearchView>(R.id.searchView)
+
             recyclerView.layoutManager = LinearLayoutManager(context)
 
             val user = auth.currentUser
@@ -78,7 +81,22 @@ class Buscar : Fragment() {
 
             cargarLugares()
 
+            searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    searchView.clearFocus()
 
+                    filtrar(p0.toString())
+
+                    return false
+                }
+
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    filtrar(p0.toString())
+                    return false
+                }
+
+
+            })
 
             recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -107,6 +125,18 @@ class Buscar : Fragment() {
             .addOnFailureListener { exception ->
                 Log.e("InicioFragment", "Error al cargar lugares: ${exception.message}")
             }
+    }
+    private fun filtrar(nombre: String){
+        var listafiltrada = arrayListOf<Lugar>()
+
+        lugares.forEach{
+            if (it.nombre.toLowerCase().contains(nombre.toLowerCase())){
+                listafiltrada.add(it)
+            }
+        }
+
+        adapter.filtrarAD(listafiltrada)
+
     }
 
     // Función para obtener el ID del usuario a partir de su correo

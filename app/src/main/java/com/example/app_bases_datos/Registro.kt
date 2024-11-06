@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -34,6 +35,15 @@ class Registro : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val backBtn = findViewById<ImageButton>(R.id.Back)
+
+        backBtn.setOnClickListener{
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         registerBtn = findViewById(R.id.RegisterBtn)
 
         registerBtn.setOnClickListener {

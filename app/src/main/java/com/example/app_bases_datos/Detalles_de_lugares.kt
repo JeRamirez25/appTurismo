@@ -74,6 +74,7 @@ class Detalles_de_lugares : AppCompatActivity() {
                 intent.putExtra("id", ID_LUGAR)
                 intent.putExtra("ID_USUARIO", ID_USUARIO)
                 startActivity(intent)
+                finish()
             }
 
             likeOn.setOnClickListener {

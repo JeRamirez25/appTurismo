@@ -9,8 +9,9 @@
         android:id="@+id/checkBoxRuta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:textColor="@color/black" />
+        android:buttonTint="@color/primary_color"
+        android:textColor="@color/black"
+        android:textColorLink="@color/primary_color"/>
 
     <TextView
         android:id="@+id/tvNombreRuta"
