@@ -23,6 +23,7 @@ class Buscar : Fragment() {
     private val lugares = mutableListOf<Lugar>()
     private lateinit var adapter: LugarAdapter
     private val auth: FirebaseAuth = Firebase.auth
+    private var listafiltrada = mutableListOf<Lugar>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +53,14 @@ class Buscar : Fragment() {
 
                         adapter.setOnItemClickListener(object : LugarAdapter.onItemClickListener {
                             override fun onItemClick(position: Int) {
-                                val lugarSeleccionado = lugares[position]
+                                var lugarSeleccionado:Lugar
+                                if (listafiltrada.size==0){
+                                    lugarSeleccionado = lugares[position]
+                                }
+                                else {
+                                    lugarSeleccionado = listafiltrada[position]
+                                }
+                                Log.d("listafiltrada", "$listafiltrada")
                                 Log.d("listaLugares", "$lugarSeleccionado")
                                 val intent = Intent(requireContext(), Detalles_de_lugares::class.java).apply {
                                     putExtra("id", lugarSeleccionado.id)
@@ -127,15 +135,17 @@ class Buscar : Fragment() {
             }
     }
     private fun filtrar(nombre: String){
-        var listafiltrada = arrayListOf<Lugar>()
 
+        val listafiltradaA = ArrayList<Lugar>()
+        listafiltrada.clear()
         lugares.forEach{
             if (it.nombre.toLowerCase().contains(nombre.toLowerCase())){
+                listafiltradaA.add(it)
                 listafiltrada.add(it)
             }
         }
 
-        adapter.filtrarAD(listafiltrada)
+        adapter.filtrarAD(listafiltradaA)
 
     }
 
