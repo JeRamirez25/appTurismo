@@ -53,8 +53,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@color/white"
-        android:src="@drawable/cerrar_icon"
         android:contentDescription="@string/cerrar_btn"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:src="@drawable/cerrar_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

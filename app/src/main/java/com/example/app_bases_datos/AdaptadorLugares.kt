@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class LugarAdapter(private val lugares: List<Lugar>,
+class LugarAdapter(private var lugares: List<Lugar>,
 ) : RecyclerView.Adapter<LugarAdapter.LugarViewHolder>() {
 
     private lateinit var mListener : onItemClickListener
@@ -54,5 +54,9 @@ class LugarAdapter(private val lugares: List<Lugar>,
                listener.onItemClick((adapterPosition))
            }
         }
+    }
+    fun filtrarAD(listaFiltrada: ArrayList<Lugar>){
+        this.lugares = listaFiltrada
+        notifyDataSetChanged()
     }
 }
