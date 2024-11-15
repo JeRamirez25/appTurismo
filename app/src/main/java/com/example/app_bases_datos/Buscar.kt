@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -29,7 +31,20 @@ class Buscar : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_buscar, container, false)
+        val view = inflater.inflate(R.layout.fragment_buscar, container, false)
+        val btnfiltro = view.findViewById<ImageButton>(R.id.botonFiltro)
+
+        btnfiltro.setOnClickListener{
+            val fragment = FiltroBuscar()
+            val fragmentManager = getFragmentManager()
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            if (fragmentTransaction != null) {
+                fragmentTransaction.replace(R.id.frame_layout, fragment)
+                fragmentTransaction.commit()
+            }
+        }
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,10 +58,13 @@ class Buscar : Fragment() {
             recyclerView.layoutManager = LinearLayoutManager(context)
 
             val user = auth.currentUser
+
+
             if (user != null) {
 
                 val userEmail = user.email ?: ""
                 saludo(userEmail, tvWelcome)
+
 
                 obtenerIdUsuario(userEmail) { userId ->
                     if (userId != null) {
@@ -89,6 +107,23 @@ class Buscar : Fragment() {
 
             cargarLugares()
 
+
+
+            /*
+            lugares.forEach{
+                val listafiltradaC = ArrayList<Lugar>()
+                if (listaParametros != null) {
+                    listafiltrada.clear()
+                    if (it.categoria in listaParametros) {
+                        listafiltradaC.add(it)
+                        listafiltrada.add(it)
+                    }
+                }
+            }
+
+            adapter.filtrarAD(listafiltradaC)
+            */
+
             searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     searchView.clearFocus()
@@ -102,6 +137,7 @@ class Buscar : Fragment() {
                     filtrar(p0.toString())
                     return false
                 }
+
 
 
             })
@@ -129,22 +165,46 @@ class Buscar : Fragment() {
                     lugares.add(lugar)
                 }
                 adapter.notifyDataSetChanged()
+
             }
             .addOnFailureListener { exception ->
                 Log.e("InicioFragment", "Error al cargar lugares: ${exception.message}")
             }
+
     }
     private fun filtrar(nombre: String){
 
         val listafiltradaA = ArrayList<Lugar>()
         listafiltrada.clear()
+        val args = this.arguments
+        val listaParametros = args?.getStringArrayList("parametrosFiltro")
+        Log.d("Cantidad lugares", "$lugares")
         lugares.forEach{
-            if (it.nombre.toLowerCase().contains(nombre.toLowerCase())){
-                listafiltradaA.add(it)
-                listafiltrada.add(it)
-            }
-        }
 
+            if (it.nombre.toLowerCase().contains(nombre.toLowerCase())){
+
+                if (listaParametros != null) {
+                    if (listaParametros.size != 0) {
+                        if (it.categoria in listaParametros) {
+                            listafiltradaA.add(it)
+                            listafiltrada.add(it)
+                        }
+                    }
+                    else {
+                        listafiltradaA.add(it)
+                        listafiltrada.add(it)
+                    }
+                }
+                else {
+                    listafiltradaA.add(it)
+                    listafiltrada.add(it)
+                }
+
+            }
+
+
+
+        }
         adapter.filtrarAD(listafiltradaA)
 
     }
